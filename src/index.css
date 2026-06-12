@@ -1,0 +1,693 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Typography ---- */
+  --font-display: "Pirata One", ui-serif, Georgia, serif;
+  --font-sans: "Fredoka", ui-sans-serif, system-ui, sans-serif;
+  --font-hand: "Caveat", "Comic Sans MS", cursive;
+
+  /* ---- Sunny Corsair palette ---- */
+  --color-parchment-50: #fffaf0;
+  --color-parchment-100: #faf0d8;
+  --color-parchment-200: #f3e3bd;
+  --color-parchment-300: #e9d39e;
+
+  --color-ink-900: #2f2014;
+  --color-ink-700: #4a3621;
+  --color-ink-600: #5d4630;
+  --color-ink-500: #6e553a;
+  --color-ink-400: #8a6f50;
+  --color-ink-300: #a98f6f;
+
+  --color-ocean-300: #8fd9f5;
+  --color-ocean-400: #44b9e6;
+  --color-ocean-500: #1a96cc;
+  --color-ocean-600: #0c6e9e;
+
+  --color-gold-300: #ffd76e;
+  --color-gold-400: #f5b73d;
+  --color-gold-500: #e09c1f;
+  --color-gold-600: #a8730d;
+
+  --color-crimson-400: #e85d4a;
+  --color-crimson-500: #d43d2a;
+  --color-crimson-600: #b03224;
+
+  --color-palm-400: #4caf6d;
+  --color-palm-500: #2e9e57;
+  --color-palm-600: #1f7a42;
+
+  /* Fixed-contrast tokens: never flip with the theme. Use for text and
+     borders sitting on colored fills (gold buttons, crimson badges). */
+  --color-tar: #2f2014;
+  --color-foam: #fffaf0;
+
+  /* ---- Cartoon "sticker" shadows (hard offsets, no blur) ---- */
+  --shadow-pop: 4px 4px 0 rgba(47, 32, 20, 0.14);
+  --shadow-pop-lg: 8px 8px 0 rgba(47, 32, 20, 0.12);
+  --shadow-pop-solid: 4px 4px 0 #2f2014;
+  --shadow-pop-solid-sm: 3px 3px 0 #2f2014;
+
+  /* ---- Motion ---- */
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 48s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-bob: bob 5s ease-in-out infinite;
+  --animate-wave: wave 10s linear infinite;
+  --animate-wave-slow: wave 17s linear infinite;
+  --animate-sway: sway 5.5s ease-in-out infinite;
+  --animate-pulse-dot: pulse-dot 2.2s ease-in-out infinite;
+  --animate-spin-slow: spin 36s linear infinite;
+  --animate-flow-dash: flow-dash 1.4s linear infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes marquee-reverse {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-1.5deg);
+    }
+    50% {
+      transform: translateY(-9px) rotate(1.5deg);
+    }
+  }
+  @keyframes wave {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-2.5deg);
+    }
+    50% {
+      transform: rotate(2.5deg);
+    }
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+      box-shadow: 0 0 0 0 var(--pulse-ring);
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 0 7px transparent;
+    }
+  }
+  @keyframes flow-dash {
+    to {
+      stroke-dashoffset: -14;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    --pulse-ring: rgba(47, 32, 20, 0.28);
+    --route-track: rgba(47, 32, 20, 0.18);
+  }
+  body {
+    @apply bg-parchment-100 font-sans text-ink-700 antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: rgba(255, 215, 110, 0.65);
+    color: #2f2014;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #faf0d8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #c9a36a, #8a6f50);
+    border-radius: 999px;
+    border: 2px solid #faf0d8;
+  }
+}
+
+/* ---- Signature effects ---- */
+
+/* Parchment "sticker" card — the cartoon equivalent of glassmorphism */
+.paper {
+  background: #fffaf0;
+  border: 2px solid rgba(47, 32, 20, 0.16);
+  box-shadow: 4px 4px 0 rgba(47, 32, 20, 0.12);
+}
+
+.text-gradient {
+  background-image: linear-gradient(100deg, #c9820e 0%, #d4502e 55%, #b03224 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-gold {
+  background-image: linear-gradient(100deg, #e09c1f, #c9820e 55%, #a8730d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Animated treasure shimmer for the hero name */
+.text-aurora {
+  background-image: linear-gradient(
+    115deg,
+    #c9820e,
+    #e85d4a 30%,
+    #1a96cc 55%,
+    #c9820e 80%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: aurora-pan 9s linear infinite;
+}
+@keyframes aurora-pan {
+  to {
+    background-position: 220% center;
+  }
+}
+
+/* Old-map speckle dots */
+.bg-dots {
+  background-image: radial-gradient(rgba(110, 85, 58, 0.13) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+}
+
+/* Paper-grain texture */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+}
+
+.mask-x {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* ================= STORM MODE =================
+   Toggled by clicking the sun in the hero. The whole site flips to a
+   rainy pirate night purely through these variable overrides. */
+
+html[data-theme="storm"] {
+  --color-parchment-50: #1c2440;
+  --color-parchment-100: #10172e;
+  --color-parchment-200: #141c36;
+  --color-parchment-300: #2a3558;
+
+  --color-ink-900: #f4ecd9;
+  --color-ink-700: #d8cdb2;
+  --color-ink-600: #c2b694;
+  --color-ink-500: #aaa087;
+  --color-ink-400: #94896d;
+  --color-ink-300: #6e6550;
+
+  --color-ocean-500: #3fb2e8;
+  --color-ocean-600: #5ec1f0;
+  --color-gold-600: #e8b84e;
+  --color-palm-600: #55c287;
+  --color-crimson-500: #e85949;
+  --color-crimson-600: #f08a76;
+
+  --shadow-pop: 4px 4px 0 rgba(0, 0, 0, 0.4);
+  --shadow-pop-lg: 8px 8px 0 rgba(0, 0, 0, 0.35);
+  --shadow-pop-solid: 4px 4px 0 #070b18;
+  --shadow-pop-solid-sm: 3px 3px 0 #070b18;
+
+  --pulse-ring: rgba(244, 236, 217, 0.3);
+  --route-track: rgba(244, 236, 217, 0.18);
+}
+
+html[data-theme="storm"] .paper {
+  background: #1c2440;
+  border-color: rgba(244, 236, 217, 0.16);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="storm"] .bg-dots {
+  background-image: radial-gradient(rgba(168, 192, 240, 0.1) 1.5px, transparent 1.5px);
+}
+
+html[data-theme="storm"] .text-gradient {
+  background-image: linear-gradient(100deg, #ffd76e 0%, #ff9d72 55%, #f7b95a 100%);
+}
+
+html[data-theme="storm"] .text-aurora {
+  background-image: linear-gradient(
+    115deg,
+    #ffd76e,
+    #ff8a6a 30%,
+    #6fc6f2 55%,
+    #ffd76e 80%
+  );
+}
+
+html[data-theme="storm"] ::selection {
+  background: rgba(232, 89, 73, 0.5);
+  color: #fffaf0;
+}
+html[data-theme="storm"] ::-webkit-scrollbar-track {
+  background: #10172e;
+}
+html[data-theme="storm"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4a5a8c, #2a3558);
+  border-color: #10172e;
+}
+
+/* Rougher seas at night */
+html[data-theme="storm"] .animate-wave {
+  animation-duration: 5.5s;
+}
+html[data-theme="storm"] .animate-wave-slow {
+  animation-duration: 9s;
+}
+html[data-theme="storm"] .animate-bob {
+  animation-duration: 2.6s;
+}
+
+/* Smooth global cross-fade while the theme flips (added briefly on toggle) */
+.theme-fade,
+.theme-fade *,
+.theme-fade *::before,
+.theme-fade *::after {
+  transition:
+    background-color 0.9s ease,
+    border-color 0.9s ease,
+    color 0.9s ease,
+    fill 0.9s ease,
+    stroke 0.9s ease,
+    box-shadow 0.9s ease !important;
+}
+
+/* ---- Rain (gentle drizzle: short gradient-faded drops, sparse tiles) ---- */
+.rain-near,
+.rain-far {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='140'%3E%3Cdefs%3E%3ClinearGradient id='d' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23a8c0f0' stop-opacity='0'/%3E%3Cstop offset='0.5' stop-color='%23a8c0f0' stop-opacity='0.38'/%3E%3Cstop offset='1' stop-color='%23a8c0f0' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cline x1='34' y1='10' x2='28' y2='28' stroke='url(%23d)' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='12' y1='76' x2='6' y2='94' stroke='url(%23d)' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.rain-near {
+  background-size: 48px 140px;
+  opacity: 0.55;
+  animation: rain-fall 1.05s linear infinite;
+}
+.rain-far {
+  background-size: 32px 94px;
+  opacity: 0.3;
+  animation: rain-fall-far 1.6s linear infinite;
+}
+@keyframes rain-fall {
+  to {
+    background-position: -48px 140px;
+  }
+}
+@keyframes rain-fall-far {
+  to {
+    background-position: -32px 94px;
+  }
+}
+/* Don't burn compositor cycles on rain while the sun is out */
+html[data-theme="day"] .rain-near,
+html[data-theme="day"] .rain-far {
+  animation-play-state: paused;
+}
+
+/* ---- Lightning ---- */
+.lightning {
+  background: radial-gradient(
+    ellipse 80% 60% at 28% 0%,
+    rgba(255, 255, 255, 0.95),
+    rgba(190, 205, 255, 0.4) 45%,
+    transparent 75%
+  );
+  opacity: 0;
+  animation: flash 9s linear infinite;
+}
+@keyframes flash {
+  0%,
+  85.9%,
+  100% {
+    opacity: 0;
+  }
+  86% {
+    opacity: 0.95;
+  }
+  87.2% {
+    opacity: 0.12;
+  }
+  88.4% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0;
+  }
+}
+
+/* Cartoon bolt that pops out of a storm cloud in sync with the flash */
+.bolt {
+  opacity: 0;
+  animation: bolt-pop 9s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 110, 0.8));
+}
+@keyframes bolt-pop {
+  0%,
+  85.9%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.9);
+  }
+  86%,
+  89% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  91% {
+    opacity: 0;
+    transform: translateY(2px) scale(0.95);
+  }
+}
+
+/* ---- 3D ship sway: the vessel yaws in true perspective ---- */
+.ship-3d {
+  transform-style: preserve-3d;
+  transform-origin: 50% 78%;
+  animation: ship-sway 7s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes ship-sway {
+  0%,
+  100% {
+    transform: rotateY(-16deg) rotateZ(-2.5deg);
+  }
+  25% {
+    transform: rotateY(0deg) rotateZ(0deg) translateY(-6px);
+  }
+  50% {
+    transform: rotateY(16deg) rotateZ(2.5deg);
+  }
+  75% {
+    transform: rotateY(0deg) rotateZ(0deg) translateY(-6px);
+  }
+}
+
+/* ---- Pirate scroll paper (physical parchment: fixed colors in both themes) ---- */
+.scroll-paper {
+  position: relative;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 30%, rgba(255, 252, 240, 0.65), transparent 70%),
+    linear-gradient(100deg, rgba(126, 75, 26, 0.08), transparent 18%, transparent 82%, rgba(126, 75, 26, 0.1)),
+    linear-gradient(100deg, #ecd9a8, #f7ecc8 30%, #eeddae 62%, #e2cb94);
+}
+/* aged paper grain */
+.scroll-paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+}
+
+/* Rolled-parchment cylinders (coil ends are SVG, see PirateFrames.jsx) */
+.roller-mid {
+  background: linear-gradient(
+    180deg,
+    #97713c 0%,
+    #d9bd87 22%,
+    #f4e6c0 45%,
+    #d9bd87 68%,
+    #8a6432 100%
+  );
+  border-top: 2px solid #6a4a1e;
+  border-bottom: 2px solid #6a4a1e;
+}
+.roller-mid-v {
+  background: linear-gradient(
+    90deg,
+    #97713c 0%,
+    #d9bd87 22%,
+    #f4e6c0 45%,
+    #d9bd87 68%,
+    #8a6432 100%
+  );
+  border-left: 2px solid #6a4a1e;
+  border-right: 2px solid #6a4a1e;
+}
+
+.open-scroll {
+  isolation: isolate;
+  filter: drop-shadow(6px 9px 0 rgba(47, 32, 20, 0.16));
+}
+.open-scroll .roller-mid-v {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(78, 46, 16, 0.32) 0 2px,
+      transparent 2px 28px
+    ),
+    linear-gradient(
+      90deg,
+      #6f451e 0%,
+      #b98748 12%,
+      #efd8a5 36%,
+      #d3a763 58%,
+      #8c5a27 82%,
+      #55300f 100%
+    );
+  box-shadow:
+    inset 6px 0 8px rgba(255, 235, 190, 0.3),
+    inset -6px 0 9px rgba(55, 28, 8, 0.42);
+}
+.open-scroll-paper {
+  min-height: 100%;
+  overflow: hidden;
+  border-top: 2px solid rgba(106, 74, 30, 0.32);
+  border-bottom: 2px solid rgba(106, 74, 30, 0.32);
+  background:
+    radial-gradient(ellipse 110% 70% at 50% 46%, rgba(255, 248, 221, 0.8), transparent 72%),
+    linear-gradient(90deg, rgba(112, 64, 18, 0.12), transparent 14%, transparent 86%, rgba(112, 64, 18, 0.14)),
+    linear-gradient(90deg, #d5a762 0%, #f6e7ba 12%, #fff2c9 48%, #efd6a1 82%, #c88f45 100%);
+  box-shadow:
+    inset 34px 0 22px -17px rgba(96, 55, 16, 0.46),
+    inset -34px 0 22px -17px rgba(96, 55, 16, 0.46),
+    inset 0 18px 16px -18px rgba(96, 55, 16, 0.45),
+    inset 0 -18px 16px -18px rgba(96, 55, 16, 0.4);
+}
+.open-scroll-paper::before {
+  content: "";
+  position: absolute;
+  inset: 12px 16px;
+  z-index: 0;
+  pointer-events: none;
+  border-top: 1px solid rgba(122, 82, 31, 0.18);
+  border-bottom: 1px solid rgba(122, 82, 31, 0.16);
+  background:
+    linear-gradient(90deg, rgba(122, 82, 31, 0.09), transparent 10%, transparent 90%, rgba(122, 82, 31, 0.09)),
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(95, 55, 18, 0.018) 8px 9px);
+}
+
+/* Ragged side edges for a vertical scroll (top/bottom hide under the rods) */
+.torn-x {
+  clip-path: polygon(
+    2.5% 0%, 97.5% 0%, 99% 5%, 97% 12%, 99.5% 20%, 97.5% 28%, 99% 37%,
+    97% 45%, 99.5% 54%, 97.5% 62%, 99% 71%, 97% 79%, 99.5% 88%, 98% 95%,
+    97.5% 100%, 2.5% 100%, 1% 94%, 3% 87%, 0.5% 78%, 2.5% 70%, 1% 61%,
+    3% 53%, 0.5% 44%, 2.5% 36%, 1% 27%, 3% 19%, 0.8% 11%, 2% 5%
+  );
+}
+/* Ragged top/bottom edges for a horizontal scroll (sides hide under the rods) */
+.torn-y {
+  clip-path: polygon(
+    0% 7%, 7% 2%, 15% 6.5%, 24% 1%, 33% 6%, 43% 1.5%, 52% 7%, 61% 2%,
+    70% 6.5%, 79% 1.5%, 88% 6%, 95% 2%, 100% 5%, 100% 93%, 94% 98%,
+    86% 93.5%, 77% 99%, 68% 94%, 59% 98.5%, 50% 93%, 41% 99%, 32% 94%,
+    23% 98.5%, 15% 93.5%, 7% 98%, 0% 94%
+  );
+}
+
+/* Physical-material scopes: re-pin theme tokens so content on parchment
+   stays dark ink and content on wood stays pale cream, in BOTH themes. */
+.parchment-scope {
+  --color-ink-900: #2f2014;
+  --color-ink-700: #4a3621;
+  --color-ink-600: #5d4630;
+  --color-ink-500: #6e553a;
+  --color-ink-400: #8a6f50;
+  --color-ink-300: #a98f6f;
+  --color-parchment-50: #fffaf0;
+  --color-parchment-100: #f0e3c0;
+  --color-ocean-500: #1a96cc;
+  --color-ocean-600: #0c6e9e;
+  --color-gold-600: #a8730d;
+  --color-crimson-500: #d43d2a;
+  --color-crimson-600: #b03224;
+  --color-palm-600: #1f7a42;
+  --pulse-ring: rgba(47, 32, 20, 0.28);
+}
+html[data-theme="storm"] .parchment-scope .text-gradient {
+  background-image: linear-gradient(100deg, #c9820e 0%, #d4502e 55%, #b03224 100%);
+}
+.wood-scope {
+  --color-ink-900: #fdf3dd;
+  --color-ink-700: #f0e2c0;
+  --color-ink-600: #e3d2a8;
+  --color-ink-500: #d4c094;
+  --color-ink-400: #c0aa7c;
+  --color-parchment-50: rgba(255, 250, 240, 0.1);
+  --color-parchment-100: rgba(255, 250, 240, 0.14);
+  --color-ocean-500: #8fd5f5;
+  --color-ocean-600: #8fd5f5;
+  --color-gold-600: #ffd76e;
+  --color-crimson-500: #ffa48c;
+  --color-palm-600: #9fe0b8;
+}
+
+/* Wooden plank sign */
+.wood-plank {
+  background-image:
+    repeating-linear-gradient(0deg, rgba(30, 15, 5, 0.2) 0 2px, transparent 2px 26px),
+    linear-gradient(180deg, #a8743c, #8b5a2b 45%, #6b4423);
+}
+.nail {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #2a1808;
+  box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+
+/* Wax seals */
+.wax-seal {
+  border-radius: 46% 54% 52% 48% / 52% 47% 53% 48%;
+  box-shadow:
+    2px 3px 0 rgba(47, 32, 20, 0.25),
+    inset -2px -3px 4px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.25);
+  font-family: var(--font-display);
+}
+.wax-seal-crimson {
+  background: radial-gradient(circle at 35% 30%, #ef6a52, #b03224 65%, #8a2418);
+}
+.wax-seal-gold {
+  background: radial-gradient(circle at 35% 30%, #ffd76e, #d99a22 65%, #a8730d);
+}
+.wax-seal-ocean {
+  background: radial-gradient(circle at 35% 30%, #5ec1f0, #1a96cc 65%, #0c5a82);
+}
+.scroll-torn {
+  clip-path: polygon(
+    0% 5%, 5% 1%, 13% 4%, 22% 0%, 31% 3.5%, 42% 0.5%, 53% 4%, 63% 0.5%,
+    74% 3.5%, 85% 0%, 94% 3%, 100% 6%, 98.5% 18%, 100% 32%, 97.5% 47%,
+    100% 61%, 98.5% 76%, 100% 90%, 95% 99.5%, 85% 96.5%, 73% 100%, 60% 96.5%,
+    47% 100%, 34% 97%, 21% 100%, 10% 96.5%, 2% 99.5%, 0% 88%, 1.5% 72%,
+    0% 55%, 2.5% 38%, 0% 20%
+  );
+}
+
+/* ---- Vintage sea-chart page background: aged vignette + plotting grid + water squiggles ---- */
+.bg-chart {
+  background-image:
+    radial-gradient(ellipse 130% 100% at 50% 35%, transparent 52%, rgba(165, 120, 55, 0.14) 90%, rgba(140, 95, 35, 0.22) 100%),
+    linear-gradient(rgba(110, 85, 58, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(110, 85, 58, 0.06) 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='100'%3E%3Cg fill='none' stroke='rgba(110,85,58,0.12)' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M20 30 q10 -10 20 0 q10 10 20 0'/%3E%3Cpath d='M90 72 q10 -10 20 0 q10 10 20 0'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 100% 100%, 110px 110px, 110px 110px, 160px 100px;
+}
+html[data-theme="storm"] .bg-chart {
+  background-image:
+    radial-gradient(ellipse 130% 100% at 50% 35%, transparent 50%, rgba(0, 0, 0, 0.35) 100%),
+    linear-gradient(rgba(168, 192, 240, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 192, 240, 0.05) 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='100'%3E%3Cg fill='none' stroke='rgba(168,192,240,0.1)' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M20 30 q10 -10 20 0 q10 10 20 0'/%3E%3Cpath d='M90 72 q10 -10 20 0 q10 10 20 0'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ---- 3D spinning doubloon ---- */
+.coin {
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 32% 30%, #ffd76e, #e09c1f 72%);
+  border: 2px solid #a8730d;
+  color: rgba(140, 95, 12, 0.9);
+  font-family: var(--font-display);
+  transform-style: preserve-3d;
+  animation: coin-spin 3.8s linear infinite;
+  box-shadow: inset 0 0 0 3px rgba(168, 115, 13, 0.35);
+}
+@keyframes coin-spin {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* ---- Stars ---- */
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: #f4e7b0;
+  box-shadow: 0 0 6px rgba(244, 231, 176, 0.9);
+  animation: twinkle 2.8s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .text-aurora,
+  .animate-marquee,
+  .animate-marquee-reverse,
+  .animate-float,
+  .animate-bob,
+  .animate-wave,
+  .animate-wave-slow,
+  .animate-sway,
+  .animate-spin-slow,
+  .animate-flow-dash,
+  .rain-near,
+  .rain-far,
+  .lightning,
+  .bolt,
+  .star,
+  .coin,
+  .ship-3d {
+    animation: none !important;
+  }
+}
