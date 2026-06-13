@@ -172,7 +172,7 @@ export default function Skills() {
           {CATEGORIES.map((cat, i) => {
             return (
               <Reveal key={cat.title} delay={0.07 * i} className="h-full">
-                <TiltCard max={7} className="group h-full">
+                <TiltCard max={7} glareEnabled={false} className="group h-full">
                   <SideScroll className={`h-full min-h-[21rem] ${SCROLL_TILTS[i]}`}>
                     <div className="flex h-full flex-col gap-4 py-1">
                       <div className="flex items-center gap-3">

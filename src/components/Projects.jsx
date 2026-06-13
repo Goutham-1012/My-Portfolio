@@ -182,7 +182,7 @@ export default function Projects() {
             const frameProps = i === 0 ? {} : { heading: "BOUNTY" };
             return (
             <Reveal key={p.title} delay={0.1 * (i + 1)} className="h-full">
-              <TiltCard max={8} className="group h-full">
+              <TiltCard max={8} glareEnabled={false} className="group h-full">
                 <Frame className="h-full" {...frameProps}>
                   <article className="flex h-full flex-col">
                     <div className="flex items-start justify-between">

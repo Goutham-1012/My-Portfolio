@@ -11,7 +11,7 @@ import {
  * 3D mouse-tilt card with a cursor-tracking sunny glare.
  * Wrap content; pass `max` to control tilt intensity in degrees.
  */
-export default function TiltCard({ children, className = "", max = 8 }) {
+export default function TiltCard({ children, className = "", max = 8, glareEnabled = true }) {
   const ref = useRef(null);
   const px = useMotionValue(0.5);
   const py = useMotionValue(0.5);
@@ -55,11 +55,13 @@ export default function TiltCard({ children, className = "", max = 8 }) {
       className={`relative ${className}`}
     >
       {children}
-      <motion.div
-        aria-hidden="true"
-        style={{ background: glare }}
-        className="pointer-events-none absolute inset-0 rounded-[inherit]"
-      />
+      {glareEnabled && (
+        <motion.div
+          aria-hidden="true"
+          style={{ background: glare }}
+          className="pointer-events-none absolute inset-0 rounded-[inherit]"
+        />
+      )}
     </motion.div>
   );
 }

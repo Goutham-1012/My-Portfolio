@@ -460,7 +460,9 @@ html[data-theme="day"] .rain-far {
 
 .open-scroll {
   isolation: isolate;
-  filter: drop-shadow(6px 9px 0 rgba(47, 32, 20, 0.16));
+}
+.open-scroll > [aria-hidden="true"] {
+  filter: drop-shadow(4px 6px 0 rgba(47, 32, 20, 0.18));
 }
 .open-scroll .roller-mid-v {
   background:
@@ -495,7 +497,8 @@ html[data-theme="day"] .rain-far {
     inset 34px 0 22px -17px rgba(96, 55, 16, 0.46),
     inset -34px 0 22px -17px rgba(96, 55, 16, 0.46),
     inset 0 18px 16px -18px rgba(96, 55, 16, 0.45),
-    inset 0 -18px 16px -18px rgba(96, 55, 16, 0.4);
+    inset 0 -18px 16px -18px rgba(96, 55, 16, 0.4),
+    5px 7px 0 rgba(47, 32, 20, 0.12);
 }
 .open-scroll-paper::before {
   content: "";
