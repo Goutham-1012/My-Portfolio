@@ -161,7 +161,7 @@ export default function About() {
         <div className="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {STATS.map((s, i) => (
             <Reveal key={s.label} delay={0.08 * i} className="h-full">
-              <TiltCard max={9} className="h-full">
+              <TiltCard max={9} glareEnabled={false} className="h-full">
                 <TornParchment tilt={SCRAP_TILTS[i]} className="h-full">
                   <p className="font-display text-4xl text-gradient sm:text-5xl">
                     <CountUp
