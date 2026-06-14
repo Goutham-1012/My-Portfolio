@@ -17,6 +17,23 @@ export default function App() {
     document.documentElement.setAttribute("data-theme", storm ? "storm" : "day");
   }, [storm]);
 
+  useEffect(() => {
+    const scrollToHash = () => {
+      const id = window.location.hash.slice(1);
+      if (!id) return;
+      requestAnimationFrame(() => {
+        const target = document.getElementById(id);
+        if (!target) return;
+        const top = target.getBoundingClientRect().top + window.scrollY - 104;
+        window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+      });
+    };
+
+    scrollToHash();
+    window.addEventListener("hashchange", scrollToHash);
+    return () => window.removeEventListener("hashchange", scrollToHash);
+  }, []);
+
   // Briefly let every color cross-fade while the palette flips,
   // then restore normal (fast) hover transitions.
   function toggleStorm() {
