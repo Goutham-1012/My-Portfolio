@@ -25,15 +25,15 @@ const CHANNELS = [
   {
     icon: Linkedin,
     label: "LinkedIn",
-    value: "Join the crew",
-    href: "#",
+    value: "gouthamgunnala",
+    href: "https://www.linkedin.com/in/gouthamgunnala/",
     iconColor: "text-ocean-600",
   },
   {
     icon: Github,
     label: "GitHub",
-    value: "Inspect the rigging",
-    href: "#",
+    value: "Goutham-1012",
+    href: "https://github.com/Goutham-1012",
     iconColor: "text-gold-600",
   },
 ];
@@ -73,14 +73,14 @@ export default function Contact() {
         className="pointer-events-none absolute right-[7%] bottom-[14%] w-9 rotate-12 text-crimson-500/20"
       />
 
-      <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div className="section-shell relative">
         <SectionHeading
           index="07"
           eyebrow="Message in a Bottle"
           title="Ready to set"
           accent="sail together?"
           align="center"
-          description="Hiring for generative AI, LLM platforms, or production ML? My inbox is the fastest ship in the fleet."
+          description="Hiring for agentic AI, multimodal AI, LLM platforms, or production ML? My inbox is the fastest ship in the fleet."
         />
 
         <Reveal delay={0.15} className="mt-12">
@@ -130,8 +130,8 @@ export default function Contact() {
         {/* Footer */}
         <footer className="mt-20 flex flex-col items-center gap-4 border-t-2 border-dashed border-ink-900/15 pt-8 pb-4 sm:flex-row sm:justify-between">
           <p className="text-sm text-ink-400">
-            © 2026 Goutham Reddy Gunnala · Charted with React, Tailwind &amp;
-            Framer Motion — no parrots were harmed
+            © 2026 Goutham Reddy Gunnala · Built with React, Tailwind &amp;
+            Framer Motion.
           </p>
           <a
             href="#top"

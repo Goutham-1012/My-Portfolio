@@ -10,10 +10,10 @@ import { RolledScroll, TornParchment } from "./ui/PirateFrames.jsx";
 const SCRAP_TILTS = ["-rotate-1", "rotate-1", "rotate-[0.5deg]", "-rotate-[0.7deg]"];
 
 const STATS = [
-  { value: 5, suffix: "+", label: "Years shipping AI to production" },
-  { value: 4, suffix: "", label: "Industries: fintech, health, aviation, retail" },
+  { value: 6, suffix: "+", label: "Years shipping AI to production" },
+  { value: 5, suffix: "", label: "Industries: energy, finance, healthcare, aviation, retail" },
   { value: 100, suffix: "TB+", label: "Data engineered for ML at scale" },
-  { value: 99.9, suffix: "%", label: "Uptime across deployed AI services", decimals: 1 },
+  { value: 99.95, suffix: "%", label: "Uptime across deployed AI services", decimals: 2 },
 ];
 
 const PORTS = [
@@ -21,26 +21,28 @@ const PORTS = [
   { org: "Lowe's", domain: "Retail", color: "text-palm-600" },
   { org: "Textron", domain: "Aviation", color: "text-crimson-500" },
   { org: "Fiserv", domain: "Fintech", color: "text-ocean-600" },
+  { org: "NextEra", domain: "Energy", color: "text-palm-600" },
 ];
 
 const CAPTAINS_LOG = [
   ["vessel:", '"The Gradient Descent"'],
   ["captain:", "goutham-reddy-gunnala"],
-  ["rank:", "generative-ai-engineer"],
-  ["years_at_sea:", "5+"],
+  ["rank:", "senior-ai-engineer"],
+  ["years_at_sea:", "6+"],
   ["ports_of_call:", ""],
+  ["  - energy:", "@NextEra"],
   ["  - fintech:", "@Fiserv"],
   ["  - aviation:", "@Textron"],
   ["  - retail:", "@Lowes"],
   ["  - healthcare:", "@Siemens"],
   ["cargo:", ""],
-  ["  - genai:", "[LLMs, RAG, diffusion]"],
-  ["  - mlops:", "[MLflow, Kubeflow, SageMaker]"],
+  ["  - genai:", "[LLMs, RAG, agents, multimodal]"],
+  ["  - mlops:", "[MLflow, W&B, SageMaker, Triton]"],
   ["bounty:", ""],
-  ["  uptime:", "99.9%"],
-  ["  compliance_speedup:", "60%"],
-  ["  latency_cut:", "35%"],
-  ["status:", "open-to-new-voyages ⚓"],
+  ["  uptime:", "99.95%"],
+  ["  grid_latency_cut:", "40%"],
+  ["  outage_reduction:", "30%"],
+  ["status:", "open-to-new-voyages"],
 ];
 
 export default function About() {
@@ -54,11 +56,11 @@ export default function About() {
         <XMark className="absolute bottom-[4%] left-[42%] w-6 rotate-6 text-crimson-500/12" />
       </div>
 
-      <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div className="section-shell relative">
         <SectionHeading
           index="01"
           eyebrow="The Captain's Tale"
-          title="Five years at sea, four ports,"
+          title="Six years at sea, five ports,"
           accent="one obsession: AI that ships."
         />
 
@@ -68,9 +70,10 @@ export default function About() {
             <Reveal>
               <p>
                 My voyage began in Bangalore, building data platforms for{" "}
-                <span className="font-semibold text-ink-700">Siemens</span> —
-                consolidating genomic and clinical datasets, and learning the
-                lesson that still steers everything I build:{" "}
+                <span className="font-semibold text-ink-700">Siemens</span> -
+                restructuring clinical data pipelines, adverse-event streams,
+                and production analytics while learning the lesson that still
+                steers everything I build:{" "}
                 <span className="font-semibold text-ink-900">
                   a model is only as seaworthy as the pipeline beneath it.
                 </span>
@@ -79,24 +82,27 @@ export default function About() {
             <Reveal delay={0.1}>
               <p>
                 At <span className="font-semibold text-ink-700">Lowe's</span> I
-                charted millions of retail transactions — streaming fraud
-                detection with Kafka and Flink, and some of my earliest
-                FAISS-powered retrieval engines, before "RAG" had a name. At{" "}
+                charted millions of retail transactions - streaming fraud
+                detection with Kafka and Flink, customer segmentation with
+                transformers, and FAISS-powered retrieval engines before RAG was
+                part of every deck. At{" "}
                 <span className="font-semibold text-ink-700">
                   Textron Aviation
                 </span>{" "}
-                I hauled 100TB+ of claims data and rigged the cloud
-                infrastructure to serve models on it.
+                I hauled 100TB+ of claims data and rigged cloud infrastructure
+                for fraud, churn, underwriting, and real-time claim tracking.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
               <p>
-                Today at <span className="font-semibold text-ink-700">Fiserv</span>{" "}
-                I command the generative layer of finance: LLM copilots that
-                answer compliance questions in seconds instead of days, fraud
-                detection that thinks in embeddings, and knowledge graphs that
-                let analysts move twice as fast — all explainable enough to
-                stand in front of a regulator.
+                I then helped <span className="font-semibold text-ink-700">Fiserv</span>{" "}
+                ship regulated generative AI for finance: LLM compliance
+                copilots, vector-powered fraud detection, advisory RAG, and
+                Neo4j risk graphs. Today at{" "}
+                <span className="font-semibold text-ink-700">NextEra Energy</span>{" "}
+                I build multi-agent grid optimization, fine-tuned LLaMA and
+                Mistral systems, RAG over 10M+ operational records, multimodal
+                turbine inspection, and 50TB+ daily SCADA anomaly detection.
               </p>
             </Reveal>
 
@@ -142,7 +148,7 @@ export default function About() {
                       key={i}
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
+                      viewport={{ once: false, amount: 0.4 }}
                       transition={{ delay: 0.04 * i, duration: 0.4 }}
                       className="whitespace-pre"
                     >

@@ -36,7 +36,7 @@ const SECONDARY = [
   },
   {
     icon: Scale,
-    title: "LLM-Powered Credit Risk Framework",
+    title: "LLM-Powered Credit Risk Modeling Framework",
     impact: "Audit-ready fairness",
     badge: "from-gold-300 to-gold-500 text-tar",
     description:
@@ -47,7 +47,8 @@ const SECONDARY = [
 
 const FEATURED_TECH = [
   "LangChain",
-  "OpenAI GPT-4",
+  "OpenAI GPT-4o",
+  "LlamaIndex",
   "Pinecone",
   "FAISS",
   "Multi-turn Memory",
@@ -70,7 +71,7 @@ export default function Projects() {
         <Coin className="absolute bottom-[28%] left-[7%] animate-float" size={22} delay={2.2} />
       </div>
 
-      <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div className="section-shell relative">
         <SectionHeading
           index="04"
           eyebrow="The Treasure"

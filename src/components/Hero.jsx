@@ -25,9 +25,9 @@ const rise = {
 };
 
 const SIGNS = [
-  { label: "RAG Architectures", cls: "left-[6%] top-[26%] -rotate-3", delay: 0 },
-  { label: "Diffusion Models", cls: "right-[7%] top-[32%] rotate-2", delay: 1.2 },
-  { label: "LLMOps · 99.9% uptime", cls: "left-[9%] bottom-[34%] rotate-3", delay: 0.6 },
+  { label: "Agentic AI", cls: "left-[6%] top-[26%] -rotate-3", delay: 0 },
+  { label: "Multimodal Vision", cls: "right-[7%] top-[32%] rotate-2", delay: 1.2 },
+  { label: "LLMOps | 99.95% uptime", cls: "left-[9%] bottom-[34%] rotate-3", delay: 0.6 },
   { label: "Vector Search", cls: "right-[10%] bottom-[38%] -rotate-2", delay: 1.8 },
 ];
 
@@ -36,6 +36,8 @@ const STARS = [
   [74, 16], [83, 7], [90, 20], [18, 30], [40, 26], [80, 30],
   [8, 18], [52, 4], [95, 12], [28, 12],
 ];
+
+const RESUME_URL = `${import.meta.env.BASE_URL}RESUME_GOUTHAM_REDDY_GUNNALA_UPDATED.docx`;
 
 /* ---- Cartoon scenery ---- */
 
@@ -48,7 +50,7 @@ function SkyOrb({ storm, onToggle }) {
       aria-pressed={storm}
       aria-label={storm ? "Return to sunny day" : "Summon a stormy night"}
       title={storm ? "Back to sunny day" : "Click for a storm!"}
-      className="pointer-events-auto absolute top-[8%] right-[7%] z-20 h-28 w-28 cursor-pointer rounded-full transition-transform duration-300 hover:scale-110 focus-visible:ring-4 focus-visible:ring-gold-400/60 focus-visible:outline-none sm:h-36 sm:w-36"
+      className="pointer-events-auto absolute top-20 right-2 z-20 h-20 w-20 cursor-pointer rounded-full transition-transform duration-300 hover:scale-110 focus-visible:ring-4 focus-visible:ring-gold-400/60 focus-visible:outline-none sm:top-[8%] sm:right-[7%] sm:h-36 sm:w-36"
     >
       {/* Sun */}
       <span
@@ -373,7 +375,7 @@ export default function Hero({ storm, onToggleStorm }) {
             <span className="h-2.5 w-2.5 animate-pulse-dot rounded-full bg-palm-500" />
             Open to new voyages
             <span className="hidden items-center gap-1 text-ink-400 sm:inline-flex">
-              <MapPin size={13} /> Kansas City, KS
+              <MapPin size={13} /> Juno Beach, FL
             </span>
           </span>
         </motion.div>
@@ -382,7 +384,7 @@ export default function Hero({ storm, onToggleStorm }) {
           variants={rise}
           className="mt-8 font-hand text-2xl font-semibold text-ocean-600 sm:text-3xl"
         >
-          ⚓ Generative AI · LLMs · MLOps ⚓
+          Senior AI Engineer | Agentic AI | LLMOps
         </motion.p>
 
         <motion.h1
@@ -398,9 +400,10 @@ export default function Hero({ storm, onToggleStorm }) {
           variants={rise}
           className="mt-7 max-w-2xl text-base leading-relaxed text-ink-500 sm:text-lg"
         >
-          I sail frontier models into production waters — LLM copilots, RAG
-          platforms, and real-time ML pipelines that hauled home real treasure
-          across <span className="font-semibold text-ink-700">finance</span>,{" "}
+          I sail agentic and multimodal AI into production waters - LLM
+          copilots, RAG platforms, grid intelligence, and real-time ML
+          pipelines across <span className="font-semibold text-ink-700">energy</span>,{" "}
+          <span className="font-semibold text-ink-700">finance</span>,{" "}
           <span className="font-semibold text-ink-700">healthcare</span>,{" "}
           <span className="font-semibold text-ink-700">aviation</span> and{" "}
           <span className="font-semibold text-ink-700">retail</span>.
@@ -421,7 +424,7 @@ export default function Hero({ storm, onToggleStorm }) {
           </Magnetic>
           <Magnetic>
             <a
-              href="/Goutham_Reddy_Gunnala_Resume.pdf"
+              href={RESUME_URL}
               download
               className="paper inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-bold text-ink-700 transition-all duration-200 hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none"
             >

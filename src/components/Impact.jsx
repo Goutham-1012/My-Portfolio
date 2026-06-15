@@ -5,23 +5,35 @@ import { Coin } from "./ui/MapDecor.jsx";
 
 const METRICS = [
   {
-    value: 60,
+    value: 55,
     suffix: "%",
-    label: "Faster regulatory compliance processing with LLM copilots",
-    org: "Fiserv",
+    label: "Less manual intervention in energy grid optimization workflows",
+    org: "NextEra",
   },
   {
-    value: 99.9,
+    value: 99.95,
     suffix: "%",
-    decimals: 1,
+    decimals: 2,
     label: "Uptime maintained across production AI services",
-    org: "Fiserv",
+    org: "NextEra",
   },
   {
     value: 65,
     suffix: "%",
-    label: "Gain in contextual relevance for RAG advisor queries",
-    org: "RAG Platform",
+    label: "Faster analyst query resolution across 10M+ grid records",
+    org: "NextEra RAG",
+  },
+  {
+    value: 50,
+    suffix: "TB+",
+    label: "SCADA and sensor data processed daily for anomaly detection",
+    org: "NextEra",
+  },
+  {
+    value: 60,
+    suffix: "%",
+    label: "Faster regulatory compliance processing with LLM copilots",
+    org: "Fiserv",
   },
   {
     value: 100,
@@ -29,24 +41,12 @@ const METRICS = [
     label: "Claims data engineered into fraud signals",
     org: "Textron",
   },
-  {
-    value: 40,
-    suffix: "%",
-    label: "Faster deployment & distributed training cycles",
-    org: "MLOps",
-  },
-  {
-    value: 35,
-    suffix: "%",
-    label: "Lower inference latency via ONNX + TensorRT",
-    org: "Serving",
-  },
 ];
 
 export default function Impact() {
   return (
     <section id="impact" aria-label="Impact" className="relative py-24 md:py-32">
-      <div className="mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div className="section-shell">
         <Reveal>
           {/* Wanted-poster treasure board: real parchment, nailed to the page */}
           <div className="scroll-paper parchment-scope relative rounded-[2rem] border-[3px] border-[#6a4a1e]/50 p-3 shadow-pop-lg">

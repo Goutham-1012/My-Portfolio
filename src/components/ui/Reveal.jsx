@@ -9,7 +9,7 @@ export default function Reveal({
   delay = 0,
   y = 28,
   className = "",
-  once = true,
+  once = false,
 }) {
   return (
     <motion.div
@@ -17,7 +17,7 @@ export default function Reveal({
       style={{ transformPerspective: 1000 }}
       initial={{ opacity: 0, y, rotateX: 16, filter: "blur(8px)" }}
       whileInView={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-      viewport={{ once, margin: "-70px" }}
+      viewport={{ once, margin: "-70px", amount: 0.15 }}
       transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}

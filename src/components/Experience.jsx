@@ -26,10 +26,27 @@ const FRAMES = {
 
 const JOBS = [
   {
+    role: "Senior AI Engineer",
+    company: "NextEra Energy",
+    location: "Juno Beach, FL",
+    dates: "Nov 2025 - Present",
+    flag: "#2e9e57",
+    accentHex: "#1f7a42",
+    scroll: "log",
+    bullets: [
+      "Built multi-agent systems with LangChain, LangGraph and AutoGen for energy grid optimization, reducing manual intervention by **55%** and decision latency by **40%**.",
+      "Fine-tuned LLaMA 3 and Mistral with LoRA/QLoRA for forecasting and predictive maintenance, reaching **92%** accuracy and cutting unplanned outages by **30%**.",
+      "Delivered RAG over **10M+** regulatory and grid records with LlamaIndex, Pinecone and AWS Bedrock, improving query resolution by **65%** while reducing hallucinations.",
+      "Built multimodal fault detection with CLIP and GPT-4o Vision across satellite imagery, telemetry and inspection reports, reaching **87%** precision across **500+** wind turbines.",
+      "Ran LLMOps with MLflow, W&B, Triton and SageMaker, including drift detection, A/B testing and governance that kept AI services at **99.95% uptime**.",
+      "Processed **50TB+** daily SCADA and sensor data with PyTorch, Kafka and Spark for real-time anomaly detection and faster grid instability alerts.",
+    ],
+  },
+  {
     role: "Generative AI Engineer",
     company: "Fiserv, Inc",
     location: "Overland Park, KS",
-    dates: "Oct 2024 - Present",
+    dates: "Oct 2024 - Oct 2025",
     flag: "#1a96cc",
     accentHex: "#0c6e9e",
     scroll: "rolled",
@@ -89,17 +106,19 @@ const JOBS = [
 ];
 
 const PORTS = [
-  { x: 0.24, y: 0.1 },
-  { x: 0.76, y: 0.36 },
-  { x: 0.24, y: 0.62 },
-  { x: 0.74, y: 0.88 },
+  { x: 0.31, y: 0.24 },
+  { x: 0.76, y: 0.3 },
+  { x: 0.24, y: 0.5 },
+  { x: 0.76, y: 0.7 },
+  { x: 0.28, y: 0.88 },
 ];
 
 const PORTS_MOBILE = [
-  { x: 0.3, y: 0.09 },
-  { x: 0.72, y: 0.36 },
-  { x: 0.28, y: 0.62 },
-  { x: 0.7, y: 0.88 },
+  { x: 0.34, y: 0.26 },
+  { x: 0.7, y: 0.28 },
+  { x: 0.3, y: 0.48 },
+  { x: 0.7, y: 0.68 },
+  { x: 0.32, y: 0.82 },
 ];
 
 function Emph({ text, accentHex }) {
@@ -210,60 +229,60 @@ export default function Experience() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ocean-300/15 to-transparent" />
       </div>
 
-      <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div className="section-shell relative">
         <SectionHeading
           index="03"
           eyebrow="The Voyage"
           title="From clinical waters"
-          accent="to the gold routes of finance."
+          accent="to renewable energy grids."
           description="Scroll, and the ship sails the route of my career. Drop anchor at any port to unroll that chapter's log."
         />
-
-        <Reveal className="mt-12">
-          <div
-            id="experience-chart"
-            ref={chartRef}
-            className="voyage-cinematic relative h-[780px] scroll-mt-28 overflow-hidden rounded-[1.5rem] border border-ink-900/15 shadow-pop-lg sm:h-[840px] lg:h-[760px]"
-          >
-            <ExperienceVoyage3D progress={sprung} />
-            <div
-              aria-hidden="true"
-              className="voyage-cinematic-glass pointer-events-none absolute inset-0 z-10"
-            />
-
-            {dims.w > 0 &&
-              JOBS.map((j, i) => (
-                <button
-                  key={j.company}
-                  type="button"
-                  onClick={() => setOpenJob(i)}
-                  aria-haspopup="dialog"
-                  aria-label={`Open the captain's log for ${j.company}`}
-                  className={`voyage-port-button group absolute z-20 -translate-x-1/2 -translate-y-1/2 outline-none ${
-                    nearPort === i ? "is-active" : ""
-                  }`}
-                  style={{
-                    left: ports[i].x,
-                    top: ports[i].y,
-                    "--pin-color": j.flag,
-                  }}
-                >
-                  <span className="voyage-port-pin" aria-hidden="true">
-                    <span />
-                  </span>
-                  <span className="voyage-port-label">
-                    <span className="block font-display text-lg leading-tight text-[#2f2014] sm:text-xl">
-                      {j.company}
-                    </span>
-                    <span className="block font-hand text-sm font-semibold text-[#6e553a] sm:text-base">
-                      {j.dates}
-                    </span>
-                  </span>
-                </button>
-              ))}
-          </div>
-        </Reveal>
       </div>
+
+      <Reveal className="relative z-10 mt-8 md:mt-10">
+        <div
+          id="experience-chart"
+          ref={chartRef}
+          className="voyage-cinematic relative left-1/2 h-[100svh] min-h-[760px] w-screen -translate-x-1/2 scroll-mt-28 overflow-visible sm:min-h-[840px] lg:min-h-[900px]"
+        >
+          <ExperienceVoyage3D progress={sprung} />
+          <div
+            aria-hidden="true"
+            className="voyage-cinematic-glass pointer-events-none absolute inset-0 z-10"
+          />
+
+          {dims.w > 0 &&
+            JOBS.map((j, i) => (
+              <button
+                key={j.company}
+                type="button"
+                onClick={() => setOpenJob(i)}
+                aria-haspopup="dialog"
+                aria-label={`Open the captain's log for ${j.company}`}
+                className={`voyage-port-button group absolute z-20 -translate-x-1/2 -translate-y-1/2 outline-none ${
+                  nearPort === i ? "is-active" : ""
+                }`}
+                style={{
+                  left: ports[i].x,
+                  top: ports[i].y,
+                  "--pin-color": j.flag,
+                }}
+              >
+                <span className="voyage-port-pin" aria-hidden="true">
+                  <span />
+                </span>
+                <span className="voyage-port-label">
+                  <span className="block font-display text-lg leading-tight text-[#2f2014] sm:text-xl">
+                    {j.company}
+                  </span>
+                  <span className="block font-hand text-sm font-semibold text-[#6e553a] sm:text-base">
+                    {j.dates}
+                  </span>
+                </span>
+              </button>
+            ))}
+        </div>
+      </Reveal>
 
       <AnimatePresence>
         {job && (

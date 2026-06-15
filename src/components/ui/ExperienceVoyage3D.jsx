@@ -2,13 +2,14 @@ import { useEffect, useRef } from "react";
 import { useMotionValueEvent } from "framer-motion";
 import * as THREE from "three";
 
-const MAP_WIDTH = 10;
-const MAP_DEPTH = 13.5;
+const MAP_WIDTH = 15.4;
+const MAP_DEPTH = 18.2;
 const ROUTE = [
-  { x: 0.24, y: 0.1 },
-  { x: 0.76, y: 0.36 },
-  { x: 0.24, y: 0.62 },
-  { x: 0.74, y: 0.88 },
+  { x: 0.31, y: 0.24 },
+  { x: 0.76, y: 0.3 },
+  { x: 0.24, y: 0.5 },
+  { x: 0.76, y: 0.7 },
+  { x: 0.28, y: 0.88 },
 ];
 
 function rng(seed = 1) {
@@ -105,10 +106,11 @@ function makeMapTexture() {
     ctx.restore();
   }
 
-  coast(w * 0.05, h * 0.16, 360, 250, "#b9a55e", "Clinical Coast");
-  coast(w * 0.94, h * 0.26, 330, 230, "#d6ba62", "Finance Bank");
-  coast(w * 0.03, h * 0.68, 370, 300, "#bfc46f", "Retail Sound");
-  coast(w * 0.92, h * 0.83, 300, 220, "#d1ae67", "Aviation Shoal");
+  coast(w * 0.06, h * 0.12, 340, 230, "#b7c56a", "Energy Coast");
+  coast(w * 0.94, h * 0.28, 320, 220, "#d6ba62", "Finance Bank");
+  coast(w * 0.04, h * 0.5, 330, 240, "#d1ae67", "Aviation Shoal");
+  coast(w * 0.94, h * 0.7, 320, 230, "#bfc46f", "Retail Sound");
+  coast(w * 0.08, h * 0.9, 300, 210, "#b9a55e", "Clinical Coast");
 
   ctx.save();
   ctx.setLineDash([28, 22]);
@@ -171,6 +173,7 @@ function makeClothTexture() {
   canvas.width = 512;
   canvas.height = 512;
   const ctx = canvas.getContext("2d");
+  const random = rng(71);
   const grad = ctx.createRadialGradient(160, 120, 20, 256, 256, 390);
   grad.addColorStop(0, "#fff8dc");
   grad.addColorStop(0.6, "#d9c08a");
@@ -193,8 +196,69 @@ function makeClothTexture() {
     ctx.lineTo(512, y + 12);
     ctx.stroke();
   }
+  ctx.strokeStyle = "rgba(89,58,26,0.18)";
+  ctx.lineWidth = 3;
+  for (let x = 42; x < 512; x += 70) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.bezierCurveTo(x - 20, 150, x + 28, 310, x - 12, 512);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 0.14;
+  ctx.fillStyle = "#5f3b18";
+  for (let i = 0; i < 190; i += 1) {
+    const x = random() * 512;
+    const y = random() * 512;
+    ctx.fillRect(x, y, 1 + random() * 2.2, 1 + random() * 2.2);
+  }
+  ctx.globalAlpha = 1;
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function makeWoodTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 768;
+  canvas.height = 384;
+  const ctx = canvas.getContext("2d");
+  const random = rng(99);
+
+  const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  grad.addColorStop(0, "#2c1309");
+  grad.addColorStop(0.35, "#6d3a18");
+  grad.addColorStop(0.68, "#3b1b0d");
+  grad.addColorStop(1, "#8d5427");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.globalAlpha = 0.38;
+  for (let y = 22; y < canvas.height; y += 38) {
+    ctx.strokeStyle = random() > 0.5 ? "#b77736" : "#1b0b05";
+    ctx.lineWidth = 2 + random() * 2.5;
+    ctx.beginPath();
+    ctx.moveTo(0, y + random() * 10);
+    for (let x = 0; x <= canvas.width; x += 48) {
+      ctx.lineTo(x, y + Math.sin(x * 0.018 + random() * 3) * 7);
+    }
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 0.18;
+  ctx.fillStyle = "#f6c16b";
+  for (let i = 0; i < 48; i += 1) {
+    const x = random() * canvas.width;
+    const y = random() * canvas.height;
+    ctx.beginPath();
+    ctx.ellipse(x, y, 18 + random() * 24, 5 + random() * 8, random() * Math.PI, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(1.6, 1);
   return texture;
 }
 
@@ -236,78 +300,144 @@ function lineBetween(a, b, material) {
 function createShip() {
   const group = new THREE.Group();
   const clothTexture = makeClothTexture();
+  const woodTexture = makeWoodTexture();
   const hullMaterial = new THREE.MeshStandardMaterial({
-    color: 0x3a1d10,
-    roughness: 0.58,
-    metalness: 0.08,
+    map: woodTexture,
+    color: 0x4b2412,
+    roughness: 0.74,
+    metalness: 0.04,
   });
   const deckMaterial = new THREE.MeshStandardMaterial({
-    color: 0x8a542a,
-    roughness: 0.74,
+    map: woodTexture,
+    color: 0xa56a33,
+    roughness: 0.78,
   });
-  const darkWood = new THREE.MeshStandardMaterial({ color: 0x261208, roughness: 0.72 });
-  const rope = new THREE.LineBasicMaterial({ color: 0x28160c, transparent: true, opacity: 0.55 });
-  const gold = new THREE.MeshStandardMaterial({ color: 0xd8a642, roughness: 0.35, metalness: 0.2 });
+  const darkWood = new THREE.MeshStandardMaterial({ color: 0x211006, roughness: 0.78 });
+  const rope = new THREE.LineBasicMaterial({ color: 0x1e1008, transparent: true, opacity: 0.68 });
+  const gold = new THREE.MeshStandardMaterial({ color: 0xd8a642, roughness: 0.35, metalness: 0.24 });
+  const cabinGlass = new THREE.MeshStandardMaterial({
+    color: 0xf2c55b,
+    emissive: 0x7a3f0d,
+    emissiveIntensity: 0.16,
+    roughness: 0.22,
+    metalness: 0.05,
+    side: THREE.DoubleSide,
+  });
 
   const hullShape = new THREE.Shape();
-  hullShape.moveTo(-1.18, 0.1);
-  hullShape.bezierCurveTo(-0.86, -0.32, -0.22, -0.43, 0.42, -0.35);
-  hullShape.bezierCurveTo(0.86, -0.29, 1.08, -0.1, 1.2, 0.15);
-  hullShape.bezierCurveTo(0.6, 0.28, -0.55, 0.28, -1.18, 0.1);
+  hullShape.moveTo(-1.38, 0.16);
+  hullShape.bezierCurveTo(-1.06, -0.36, -0.42, -0.56, 0.36, -0.46);
+  hullShape.bezierCurveTo(0.92, -0.39, 1.25, -0.13, 1.4, 0.18);
+  hullShape.bezierCurveTo(0.72, 0.34, -0.72, 0.36, -1.38, 0.16);
   const hullGeometry = new THREE.ExtrudeGeometry(hullShape, {
-    depth: 0.42,
+    depth: 0.68,
     bevelEnabled: true,
-    bevelSegments: 5,
-    bevelSize: 0.045,
-    bevelThickness: 0.055,
+    bevelSegments: 8,
+    bevelSize: 0.06,
+    bevelThickness: 0.07,
   });
-  hullGeometry.translate(0, 0, -0.21);
+  hullGeometry.translate(0, 0, -0.34);
   const hull = new THREE.Mesh(hullGeometry, hullMaterial);
   hull.castShadow = true;
   hull.receiveShadow = true;
   group.add(hull);
 
-  const deck = new THREE.Mesh(new THREE.BoxGeometry(1.75, 0.1, 0.36), deckMaterial);
-  deck.position.set(-0.03, 0.2, 0);
+  const deck = new THREE.Mesh(new THREE.BoxGeometry(2.08, 0.1, 0.56), deckMaterial);
+  deck.position.set(-0.06, 0.25, 0);
   deck.castShadow = true;
   group.add(deck);
 
-  const stern = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.34, 0.45), deckMaterial);
-  stern.position.set(-0.88, 0.36, 0);
-  stern.castShadow = true;
-  group.add(stern);
+  for (let z = -0.22; z <= 0.22; z += 0.11) {
+    const plank = new THREE.Mesh(new THREE.BoxGeometry(1.92, 0.012, 0.018), darkWood);
+    plank.position.set(-0.07, 0.31, z);
+    plank.castShadow = true;
+    group.add(plank);
+  }
 
-  [-0.48, -0.12, 0.24, 0.6].forEach((x) => {
-    [-0.226, 0.226].forEach((z) => {
-      const porthole = new THREE.Mesh(new THREE.CircleGeometry(0.045, 18), gold);
-      porthole.position.set(x, -0.04, z);
+  const cabin = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.34, 0.58), deckMaterial);
+  cabin.position.set(-0.98, 0.48, 0);
+  cabin.castShadow = true;
+  group.add(cabin);
+
+  const cabinRoof = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.08, 0.68), darkWood);
+  cabinRoof.position.set(-0.98, 0.68, 0);
+  cabinRoof.castShadow = true;
+  group.add(cabinRoof);
+
+  [-0.34, 0.34].forEach((z) => {
+    const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.024, 0.028, 2.18, 16), darkWood);
+    rail.rotation.z = Math.PI / 2;
+    rail.position.set(-0.05, 0.4, z);
+    rail.castShadow = true;
+    group.add(rail);
+
+    [-1.05, -0.68, -0.28, 0.14, 0.56, 0.96].forEach((x) => {
+      const post = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.016, 0.26, 10), darkWood);
+      post.position.set(x, 0.31, z);
+      post.castShadow = true;
+      group.add(post);
+    });
+  });
+
+  [-0.34, 0.34].forEach((z) => {
+    [-1.08, -0.9].forEach((x) => {
+      const window = new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.075), cabinGlass);
+      window.position.set(x, 0.52, z < 0 ? z - 0.002 : z + 0.002);
+      window.rotation.y = z < 0 ? Math.PI : 0;
+      group.add(window);
+    });
+  });
+
+  [-0.68, -0.34, 0.02, 0.38, 0.74].forEach((x) => {
+    [-0.356, 0.356].forEach((z) => {
+      const porthole = new THREE.Group();
+      const glass = new THREE.Mesh(new THREE.CircleGeometry(0.044, 24), cabinGlass);
+      const ring = new THREE.Mesh(new THREE.RingGeometry(0.048, 0.066, 24), gold);
+      porthole.add(glass, ring);
+      porthole.position.set(x, -0.02, z);
       porthole.rotation.y = z < 0 ? Math.PI : 0;
       group.add(porthole);
     });
   });
 
-  const mastXs = [-0.48, 0.1, 0.58];
-  mastXs.forEach((x, i) => {
-    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.033, i === 1 ? 1.75 : 1.36, 12), darkWood);
-    mast.position.set(x, 0.88, 0);
+  const bowsprit = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.028, 0.82, 14), darkWood);
+  bowsprit.rotation.z = Math.PI / 2 + 0.18;
+  bowsprit.position.set(1.46, 0.36, 0);
+  bowsprit.castShadow = true;
+  group.add(bowsprit);
+
+  const mastSpecs = [
+    { x: -0.58, height: 1.62, topYard: 1.36, lowYard: 0.91, yard: 0.84 },
+    { x: 0.04, height: 2.02, topYard: 1.66, lowYard: 1.08, yard: 1.12 },
+    { x: 0.64, height: 1.58, topYard: 1.32, lowYard: 0.9, yard: 0.78 },
+  ];
+
+  mastSpecs.forEach((spec) => {
+    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.046, spec.height, 18), darkWood);
+    mast.position.set(spec.x, 0.3 + spec.height / 2, 0);
     mast.castShadow = true;
     group.add(mast);
 
-    const yardTop = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.018, i === 1 ? 0.98 : 0.72, 12), darkWood);
+    const yardTop = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.02, spec.yard, 14), darkWood);
     yardTop.rotation.z = Math.PI / 2;
-    yardTop.position.set(x, i === 1 ? 1.34 : 1.12, 0.01);
+    yardTop.position.set(spec.x, spec.topYard, 0.018);
     yardTop.castShadow = true;
     group.add(yardTop);
 
-    const yardLow = yardTop.clone();
-    yardLow.position.y -= i === 1 ? 0.52 : 0.42;
+    const yardLow = new THREE.Mesh(new THREE.CylinderGeometry(0.017, 0.023, spec.yard * 1.08, 14), darkWood);
+    yardLow.rotation.z = Math.PI / 2;
+    yardLow.position.set(spec.x, spec.lowYard, 0.018);
+    yardLow.castShadow = true;
     group.add(yardLow);
   });
 
   const sails = [
-    { x: -0.48, y: 0.84, w: 0.6, h: 0.92, side: -1 },
-    { x: 0.1, y: 1.02, w: 0.82, h: 1.2, side: 1 },
-    { x: 0.58, y: 0.86, w: 0.56, h: 0.84, side: 1 },
+    { x: -0.58, y: 0.92, w: 0.64, h: 0.84, side: -1 },
+    { x: -0.58, y: 1.36, w: 0.48, h: 0.48, side: -1 },
+    { x: 0.04, y: 1.08, w: 0.86, h: 1.08, side: 1 },
+    { x: 0.04, y: 1.6, w: 0.68, h: 0.58, side: 1 },
+    { x: 0.64, y: 0.94, w: 0.56, h: 0.78, side: 1 },
+    { x: 0.64, y: 1.32, w: 0.42, h: 0.42, side: 1 },
   ].map((spec) => {
     const sail = makeBillowSail(spec.w, spec.h, spec.side, clothTexture);
     sail.position.set(spec.x, spec.y, -0.035);
@@ -317,8 +447,8 @@ function createShip() {
 
   const jibShape = new THREE.Shape();
   jibShape.moveTo(0, -0.42);
-  jibShape.lineTo(0.62, -0.1);
-  jibShape.lineTo(0, 0.5);
+  jibShape.lineTo(0.72, -0.12);
+  jibShape.lineTo(0, 0.58);
   jibShape.closePath();
   const jib = new THREE.Mesh(
     new THREE.ShapeGeometry(jibShape),
@@ -331,21 +461,28 @@ function createShip() {
       opacity: 0.92,
     })
   );
-  jib.position.set(0.82, 0.85, -0.02);
+  jib.position.set(0.98, 0.83, -0.02);
   jib.castShadow = true;
   group.add(jib);
   sails.push(jib);
 
-  const bow = new THREE.Vector3(1.28, 0.18, 0);
-  const sternPoint = new THREE.Vector3(-1.08, 0.22, 0);
-  const mastTops = [
-    new THREE.Vector3(-0.48, 1.56, 0),
-    new THREE.Vector3(0.1, 1.78, 0),
-    new THREE.Vector3(0.58, 1.47, 0),
+  const bow = new THREE.Vector3(1.78, 0.4, 0);
+  const sternPoint = new THREE.Vector3(-1.28, 0.42, 0);
+  const mastTops = mastSpecs.map((spec) => new THREE.Vector3(spec.x, 0.3 + spec.height, 0));
+  const deckCorners = [
+    new THREE.Vector3(-1.15, 0.38, -0.34),
+    new THREE.Vector3(-1.15, 0.38, 0.34),
+    new THREE.Vector3(1.03, 0.38, -0.34),
+    new THREE.Vector3(1.03, 0.38, 0.34),
   ];
   mastTops.forEach((top) => {
     group.add(lineBetween(top, bow, rope));
     group.add(lineBetween(top, sternPoint, rope));
+    deckCorners.forEach((corner) => {
+      if (Math.abs(corner.x - top.x) < 0.9) {
+        group.add(lineBetween(top, corner, rope));
+      }
+    });
   });
   group.add(lineBetween(mastTops[0], mastTops[1], rope));
   group.add(lineBetween(mastTops[1], mastTops[2], rope));
@@ -362,7 +499,7 @@ function createShip() {
   flag.rotation.z = -0.1;
   group.add(flag);
 
-  group.scale.setScalar(0.72);
+  group.scale.setScalar(0.68);
   group.position.y = 0.25;
   return { group, sails };
 }
@@ -422,15 +559,16 @@ export default function ExperienceVoyage3D({ progress }) {
     if (!mount) return undefined;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0xf2dfad, 10, 24);
+    scene.fog = new THREE.Fog(0xf2dfad, 12, 30);
 
-    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 80);
-    camera.position.set(0, 7.4, 9.2);
-    camera.lookAt(0, 0.1, 0.2);
+    const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 80);
+    camera.position.set(0, 7.1, 8.6);
+    camera.lookAt(0, 0.05, 0.15);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
+      preserveDrawingBuffer: true,
       powerPreference: "high-performance",
     });
     renderer.setClearColor(0x000000, 0);
@@ -438,9 +576,11 @@ export default function ExperienceVoyage3D({ progress }) {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.08;
     mount.appendChild(renderer.domElement);
 
-    const ambient = new THREE.HemisphereLight(0xfff2cc, 0x3c2415, 2.1);
+    const ambient = new THREE.HemisphereLight(0xfff2cc, 0x3c2415, 1.85);
     scene.add(ambient);
 
     const sun = new THREE.DirectionalLight(0xfff0c4, 3.6);
@@ -449,10 +589,10 @@ export default function ExperienceVoyage3D({ progress }) {
     sun.shadow.mapSize.set(2048, 2048);
     sun.shadow.camera.near = 1;
     sun.shadow.camera.far = 24;
-    sun.shadow.camera.left = -8;
-    sun.shadow.camera.right = 8;
-    sun.shadow.camera.top = 8;
-    sun.shadow.camera.bottom = -8;
+    sun.shadow.camera.left = -12;
+    sun.shadow.camera.right = 12;
+    sun.shadow.camera.top = 10;
+    sun.shadow.camera.bottom = -10;
     scene.add(sun);
 
     const fill = new THREE.DirectionalLight(0x87b7ff, 1.1);
@@ -501,11 +641,26 @@ export default function ExperienceVoyage3D({ progress }) {
     shadow.scale.set(1.5, 0.46, 1);
     scene.add(shadow);
 
+    const frameCamera = (width) => {
+      if (width < 640) {
+        camera.fov = 50;
+        camera.position.set(0, 12.1, 18.0);
+      } else if (width < 1024) {
+        camera.fov = 42;
+        camera.position.set(0, 10.6, 14.8);
+      } else {
+        camera.fov = 38;
+        camera.position.set(0, 9.5, 13.0);
+      }
+      camera.lookAt(0, 0.05, 0.35);
+    };
+
     const resize = () => {
       const rect = mount.getBoundingClientRect();
       const width = Math.max(1, rect.width);
       const height = Math.max(1, rect.height);
       camera.aspect = width / height;
+      frameCamera(width);
       camera.updateProjectionMatrix();
       renderer.setSize(width, height, false);
     };

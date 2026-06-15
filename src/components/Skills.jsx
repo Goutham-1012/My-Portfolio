@@ -21,14 +21,22 @@ const CATEGORIES = [
       "PyTorch",
       "TensorFlow",
       "Keras",
+      "JAX",
       "Hugging Face",
-      "GPT",
+      "GPT-4o",
       "BERT",
       "T5",
       "CLIP",
+      "LLaMA",
+      "Mistral",
+      "Gemini",
       "Diffusion Models",
-      "GANs",
-      "VAEs",
+      "LoRA",
+      "QLoRA",
+      "PEFT",
+      "Multimodal Models",
+      "Computer Vision",
+      "NLP",
     ],
   },
   {
@@ -38,15 +46,20 @@ const CATEGORIES = [
     skills: [
       "OpenAI API",
       "LangChain",
+      "LangGraph",
+      "LlamaIndex",
       "Anthropic Claude",
       "Cohere",
+      "AWS Bedrock",
+      "Azure OpenAI",
       "DreamBooth",
       "RAG",
-      "Chain-of-Thought",
+      "Multi-Agent Systems",
+      "Agentic AI",
+      "Function Calling",
       "FAISS",
       "Pinecone",
       "Weaviate",
-      "ChromaDB",
     ],
   },
   {
@@ -58,11 +71,19 @@ const CATEGORIES = [
       "Kubeflow",
       "SageMaker",
       "Vertex AI",
+      "Azure ML",
       "KServe",
       "DVC",
       "Weights & Biases",
+      "Triton",
+      "TorchServe",
+      "Ray",
       "Jenkins",
       "GitHub Actions",
+      "LLMOps",
+      "Model Governance",
+      "A/B Testing",
+      "Drift Monitoring",
     ],
   },
   {
@@ -76,14 +97,19 @@ const CATEGORIES = [
       "BigQuery",
       "Snowflake",
       "Apache NiFi",
+      "Apache Flink",
+      "dbt",
+      "Delta Lake",
+      "Databricks",
+      "Redshift",
       "SQL",
+      "Timeseries Data",
       "Neo4j",
-      "SPARQL",
     ],
   },
   {
     icon: Cloud,
-    title: "Cloud & Serving",
+    title: "Serving & Vector Search",
     badge: "from-ocean-300 to-ocean-500 text-white",
     skills: [
       "AWS",
@@ -96,6 +122,11 @@ const CATEGORIES = [
       "ONNX",
       "TensorRT",
       "FastAPI",
+      "gRPC",
+      "Milvus",
+      "pgvector",
+      "Elasticsearch",
+      "ChromaDB",
     ],
   },
   {
@@ -108,10 +139,14 @@ const CATEGORIES = [
       "Fairlearn",
       "Differential Privacy",
       "Federated Learning",
+      "PII Redaction",
+      "RLHF",
+      "RLAIF",
+      "AI Safety",
+      "Bias Detection",
+      "Regulatory Compliance",
       "Prometheus",
       "Grafana",
-      "ELK Stack",
-      "OpenTelemetry",
     ],
   },
 ];
@@ -120,11 +155,19 @@ const MARQUEE = [
   "Python",
   "PyTorch",
   "LangChain",
+  "LangGraph",
+  "LlamaIndex",
   "Hugging Face",
-  "GPT-4",
+  "GPT-4o",
+  "LLaMA",
+  "Mistral",
+  "Bedrock",
   "Stable Diffusion",
   "Pinecone",
   "FAISS",
+  "Milvus",
+  "AutoGen",
+  "CrewAI",
   "Kafka",
   "Spark",
   "Airflow",
@@ -159,13 +202,13 @@ export default function Skills() {
         <Coin className="absolute top-[14%] left-[6%] animate-float" size={30} delay={0.6} />
       </div>
 
-      <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div className="section-shell relative">
         <SectionHeading
           index="02"
           eyebrow="The Cargo Hold"
           title="A treasure chest"
           accent="of AI tools."
-          description="From prototype notebooks to 99.9%-uptime production fleets — every layer of the modern ML stack, stowed and battle-tested."
+          description="From prototype notebooks to 99.95%-uptime production fleets - every layer of the modern AI and ML stack, stowed and battle-tested."
         />
 
         <div className="mt-14 grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">

@@ -46,7 +46,7 @@ export default function SectionHeading({
           variants={wordContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: false, margin: "-60px", amount: 0.35 }}
           className={`flex flex-wrap gap-x-[0.28em] gap-y-1 ${
             align === "center" ? "justify-center" : ""
           }`}

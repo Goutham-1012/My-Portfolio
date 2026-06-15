@@ -211,6 +211,11 @@
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
+.section-shell {
+  width: min(calc(100% - clamp(2rem, 6vw, 8rem)), 100rem);
+  margin-inline: auto;
+}
+
 /* ================= STORM MODE =================
    Toggled by clicking the sun in the hero. The whole site flips to a
    rainy pirate night purely through these variable overrides. */
@@ -615,13 +620,7 @@ html[data-theme="storm"] .parchment-scope .text-gradient {
 /* ---- Cinematic 3D voyage chart ---- */
 .voyage-cinematic {
   isolation: isolate;
-  background:
-    radial-gradient(ellipse at 48% 30%, rgba(255, 238, 176, 0.2), transparent 42%),
-    linear-gradient(145deg, #5b3b1b, #1d120a 72%);
-  box-shadow:
-    0 24px 48px rgba(47, 32, 20, 0.24),
-    inset 0 0 0 1px rgba(255, 250, 240, 0.28),
-    inset 0 -42px 72px rgba(35, 18, 7, 0.34);
+  background: transparent;
 }
 .voyage-cinematic canvas {
   display: block;
@@ -633,9 +632,8 @@ html[data-theme="storm"] .parchment-scope .text-gradient {
 }
 .voyage-cinematic-glass {
   background:
-    radial-gradient(ellipse 88% 62% at 50% 42%, transparent 42%, rgba(39, 22, 10, 0.28) 100%),
-    linear-gradient(180deg, rgba(255, 244, 194, 0.26), transparent 18%, transparent 75%, rgba(42, 22, 9, 0.34)),
-    linear-gradient(90deg, rgba(30, 16, 8, 0.22), transparent 18%, transparent 82%, rgba(30, 16, 8, 0.22));
+    radial-gradient(ellipse 64% 34% at 50% 74%, rgba(47, 32, 20, 0.16), transparent 72%),
+    radial-gradient(ellipse 58% 34% at 50% 30%, rgba(255, 244, 194, 0.14), transparent 68%);
 }
 .voyage-port-button {
   --pin-color: #d43d2a;
@@ -724,15 +722,12 @@ html[data-theme="storm"] .parchment-scope .text-gradient {
   outline-offset: 4px;
 }
 html[data-theme="storm"] .voyage-cinematic {
-  box-shadow:
-    0 24px 52px rgba(0, 0, 0, 0.42),
-    inset 0 0 0 1px rgba(244, 236, 217, 0.16),
-    inset 0 -46px 82px rgba(0, 0, 0, 0.38);
+  background: transparent;
 }
 html[data-theme="storm"] .voyage-cinematic-glass {
   background:
-    radial-gradient(ellipse 88% 62% at 50% 42%, rgba(26, 36, 66, 0.06) 36%, rgba(3, 7, 18, 0.44) 100%),
-    linear-gradient(180deg, rgba(120, 146, 210, 0.16), transparent 22%, transparent 76%, rgba(3, 7, 18, 0.44));
+    radial-gradient(ellipse 64% 34% at 50% 74%, rgba(0, 0, 0, 0.24), transparent 72%),
+    radial-gradient(ellipse 58% 34% at 50% 30%, rgba(120, 146, 210, 0.12), transparent 68%);
 }
 
 /* ---- Vintage sea-chart page background: aged vignette + plotting grid + water squiggles ---- */

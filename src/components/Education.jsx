@@ -9,7 +9,7 @@ const CERTS = [
   {
     icon: Award,
     title: "AWS Certified Data Engineer",
-    subtitle: "Associate · Amazon Web Services",
+    subtitle: "Associate - Amazon Web Services",
     badge: "from-gold-300 to-gold-500 text-tar",
     text: "text-gold-600",
     seal: "gold",
@@ -18,7 +18,7 @@ const CERTS = [
   {
     icon: BadgeCheck,
     title: "Azure AI Engineer",
-    subtitle: "Associate · Microsoft Certified",
+    subtitle: "Associate - Microsoft Certified",
     badge: "from-ocean-400 to-ocean-600 text-white",
     text: "text-ocean-600",
     seal: "ocean",
@@ -40,7 +40,7 @@ export default function Education() {
         <Starfish className="absolute bottom-[10%] left-[4%] w-9 rotate-12 text-gold-600/25" />
       </div>
 
-      <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
+      <div className="section-shell relative">
         <SectionHeading
           index="05"
           eyebrow="Letters of Marque"
@@ -68,7 +68,7 @@ export default function Education() {
                   </p>
                   <div className="mt-auto pt-6">
                     <span className="rounded-full border-2 border-ink-900/12 bg-parchment-100 px-4 py-1.5 font-hand text-lg font-bold text-ocean-600">
-                      Aug 2023 — May 2025
+                      Aug 2023 - May 2025
                     </span>
                   </div>
                 </div>
@@ -103,8 +103,8 @@ export default function Education() {
             ))}
             <Reveal delay={0.3}>
               <p className="px-2 font-hand text-xl font-semibold text-ink-400">
-                ~ always chartin' new waters — currently exploring agentic AI
-                architectures &amp; multi-modal foundation models ~
+                ~ always chartin' new waters - currently building agentic AI,
+                multimodal foundation models, and production LLMOps ~
               </p>
             </Reveal>
           </div>

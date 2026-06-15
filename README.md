@@ -1,6 +1,6 @@
 # Goutham Reddy Gunnala — Portfolio
 
-A bright, cartoon-pirate themed portfolio for a Generative AI / ML Engineer.
+A bright, cartoon-pirate themed portfolio for a Senior AI / ML Engineer.
 Built with **React 18 + Vite 6 + Tailwind CSS v4 + Framer Motion + Lucide**.
 
 ## Quick start
@@ -12,18 +12,18 @@ npm run build    # production build → dist/
 npm run preview  # preview the production build
 ```
 
-## Add your resume PDF
+## Add your resume
 
-The hero's **Download Resume** button points at `/Goutham_Reddy_Gunnala_Resume.pdf`.
-Drop your resume PDF into the `public/` folder with that exact filename:
+The hero's **Download Resume** button uses Vite's `BASE_URL` and serves `RESUME_GOUTHAM_REDDY_GUNNALA_UPDATED.docx`.
+Drop the resume into the `public/` folder with that exact filename:
 
 ```
-public/Goutham_Reddy_Gunnala_Resume.pdf
+public/RESUME_GOUTHAM_REDDY_GUNNALA_UPDATED.docx
 ```
 
 ## Replace the placeholder links
 
-- LinkedIn / GitHub buttons in `src/components/Contact.jsx` (`href: "#"`)
+- LinkedIn / GitHub buttons in `src/components/Contact.jsx`
 - GitHub / demo icons on project cards in `src/components/Projects.jsx`
 
 ## Signature features
@@ -34,7 +34,7 @@ public/Goutham_Reddy_Gunnala_Resume.pdf
   `data-theme="storm"` attribute on `<html>` that overrides the design-token
   CSS variables (`src/index.css`).
 - **The Voyage (Chapter 03)** — an interactive sea chart. A 3D pirate ship
-  sails a serpentine route between four islands as you scroll; islands light
+  sails a serpentine route between five islands as you scroll; islands light
   up as the ship anchors. Clicking an island opens the captain's log as a
   modal — a different scroll artifact per employer.
 - **3D everywhere** — mouse-parallax scenery layers in the hero, perspective
