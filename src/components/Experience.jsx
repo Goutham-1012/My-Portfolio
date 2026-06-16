@@ -229,7 +229,7 @@ export default function Experience() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ocean-300/15 to-transparent" />
       </div>
 
-      <div className="section-shell relative">
+      <div className="section-shell relative z-20">
         <SectionHeading
           index="03"
           eyebrow="The Voyage"
@@ -239,11 +239,11 @@ export default function Experience() {
         />
       </div>
 
-      <Reveal className="relative z-10 mt-8 md:mt-10">
+      <Reveal className="relative z-10 -mt-48 md:-mt-56">
         <div
           id="experience-chart"
           ref={chartRef}
-          className="voyage-cinematic relative left-1/2 h-[100svh] min-h-[760px] w-screen -translate-x-1/2 scroll-mt-28 overflow-visible sm:min-h-[840px] lg:min-h-[900px]"
+          className="voyage-cinematic relative left-1/2 h-[112svh] min-h-[860px] w-screen -translate-x-1/2 scroll-mt-28 overflow-visible sm:min-h-[940px] lg:min-h-[1020px]"
         >
           <ExperienceVoyage3D progress={sprung} />
           <div

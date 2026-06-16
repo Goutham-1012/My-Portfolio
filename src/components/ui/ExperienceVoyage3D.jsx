@@ -2,8 +2,12 @@ import { useEffect, useRef } from "react";
 import { useMotionValueEvent } from "framer-motion";
 import * as THREE from "three";
 
-const MAP_WIDTH = 15.4;
-const MAP_DEPTH = 18.2;
+const MAP_WIDTH = 120;
+const MAP_DEPTH = 112;
+const MAP_ART_WIDTH = 31.5;
+const MAP_ART_DEPTH = 29.5;
+const ROUTE_WIDTH = 16.2;
+const ROUTE_DEPTH = 19.2;
 const ROUTE = [
   { x: 0.31, y: 0.24 },
   { x: 0.76, y: 0.3 },
@@ -24,10 +28,34 @@ function rng(seed = 1) {
 
 function worldPoint(point) {
   return new THREE.Vector3(
-    (point.x - 0.5) * MAP_WIDTH,
+    (point.x - 0.5) * ROUTE_WIDTH,
     0.08,
-    (point.y - 0.5) * MAP_DEPTH
+    (point.y - 0.5) * ROUTE_DEPTH
   );
+}
+
+function texturePoint(point, width, height) {
+  return {
+    x: width * (0.5 + (point.x - 0.5) * (ROUTE_WIDTH / MAP_ART_WIDTH)),
+    y: height * (0.5 + (point.y - 0.5) * (ROUTE_DEPTH / MAP_ART_DEPTH)),
+  };
+}
+
+function createMapGeometry() {
+  const geometry = new THREE.PlaneGeometry(MAP_WIDTH, MAP_DEPTH, 96, 96);
+  const position = geometry.attributes.position;
+  const uv = geometry.attributes.uv;
+
+  for (let i = 0; i < position.count; i += 1) {
+    uv.setXY(
+      i,
+      0.5 + position.getX(i) / MAP_ART_WIDTH,
+      0.5 + position.getY(i) / MAP_ART_DEPTH
+    );
+  }
+
+  uv.needsUpdate = true;
+  return geometry;
 }
 
 function makeMapTexture() {
@@ -71,7 +99,8 @@ function makeMapTexture() {
   }
   ctx.globalAlpha = 1;
 
-  function coast(cx, cy, rx, ry, color, label) {
+  function coast(point, rx, ry, color, label) {
+    const { x: cx, y: cy } = texturePoint(point, w, h);
     ctx.save();
     ctx.translate(cx, cy);
     ctx.beginPath();
@@ -98,19 +127,19 @@ function makeMapTexture() {
       ctx.stroke();
     }
     ctx.globalAlpha = 1;
-    ctx.font = `${Math.max(34, Math.round(rx * 0.18))}px Georgia, serif`;
+    ctx.font = `${Math.max(38, Math.round(rx * 0.2))}px Georgia, serif`;
     ctx.fillStyle = "rgba(72,45,25,0.5)";
     ctx.textAlign = "center";
     ctx.rotate(-0.08);
-    ctx.fillText(label, 0, ry * 0.12);
+    ctx.fillText(label, 0, ry * 0.12, rx * 1.65);
     ctx.restore();
   }
 
-  coast(w * 0.06, h * 0.12, 340, 230, "#b7c56a", "Energy Coast");
-  coast(w * 0.94, h * 0.28, 320, 220, "#d6ba62", "Finance Bank");
-  coast(w * 0.04, h * 0.5, 330, 240, "#d1ae67", "Aviation Shoal");
-  coast(w * 0.94, h * 0.7, 320, 230, "#bfc46f", "Retail Sound");
-  coast(w * 0.08, h * 0.9, 300, 210, "#b9a55e", "Clinical Coast");
+  coast({ x: 0.2, y: 0.18 }, 250, 188, "#b7c56a", "Energy Coast");
+  coast({ x: 0.84, y: 0.23 }, 244, 184, "#d6ba62", "Finance Bank");
+  coast({ x: 0.18, y: 0.5 }, 254, 192, "#d1ae67", "Aviation Shoal");
+  coast({ x: 0.82, y: 0.72 }, 254, 192, "#bfc46f", "Retail Sound");
+  coast({ x: 0.24, y: 0.9 }, 238, 178, "#b9a55e", "Clinical Coast");
 
   ctx.save();
   ctx.setLineDash([28, 22]);
@@ -118,20 +147,21 @@ function makeMapTexture() {
   ctx.strokeStyle = "rgba(84,61,33,0.32)";
   ctx.lineWidth = 7;
   ctx.beginPath();
-  ctx.moveTo(w * ROUTE[0].x, h * ROUTE[0].y);
+  const firstRoutePoint = texturePoint(ROUTE[0], w, h);
+  ctx.moveTo(firstRoutePoint.x, firstRoutePoint.y);
   for (let i = 1; i < ROUTE.length; i += 1) {
-    const a = ROUTE[i - 1];
-    const b = ROUTE[i];
-    const ay = h * a.y;
-    const by = h * b.y;
+    const a = texturePoint(ROUTE[i - 1], w, h);
+    const b = texturePoint(ROUTE[i], w, h);
+    const ay = a.y;
+    const by = b.y;
     const midY = (ay + by) / 2;
-    ctx.bezierCurveTo(w * a.x, midY, w * b.x, midY, w * b.x, by);
+    ctx.bezierCurveTo(a.x, midY, b.x, midY, b.x, by);
   }
   ctx.stroke();
   ctx.restore();
 
   ctx.save();
-  ctx.translate(w * 0.82, h * 0.12);
+  ctx.translate(w * 0.66, h * 0.23);
   ctx.rotate(-0.25);
   ctx.strokeStyle = "rgba(82,52,27,0.28)";
   ctx.lineWidth = 5;
@@ -576,7 +606,7 @@ export default function ExperienceVoyage3D({ progress }) {
     const scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0xf2dfad, 12, 30);
 
-    const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 80);
+    const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 180);
     camera.position.set(0, 7.1, 8.6);
     camera.lookAt(0, 0.05, 0.15);
 
@@ -627,20 +657,10 @@ export default function ExperienceVoyage3D({ progress }) {
       roughness: 0.86,
       metalness: 0,
     });
-    const map = new THREE.Mesh(new THREE.PlaneGeometry(MAP_WIDTH, MAP_DEPTH, 80, 80), mapMaterial);
+    const map = new THREE.Mesh(createMapGeometry(), mapMaterial);
     map.rotation.x = -Math.PI / 2;
     map.receiveShadow = true;
     scene.add(map);
-
-    const edgeMaterial = new THREE.MeshStandardMaterial({
-      color: 0x7b5529,
-      roughness: 0.78,
-      metalness: 0.02,
-    });
-    const edge = new THREE.Mesh(new THREE.BoxGeometry(MAP_WIDTH + 0.08, 0.16, MAP_DEPTH + 0.08), edgeMaterial);
-    edge.position.y = -0.12;
-    edge.receiveShadow = true;
-    scene.add(edge);
 
     const routePoints = ROUTE.map(worldPoint);
     const curve = new THREE.CatmullRomCurve3(routePoints, false, "centripetal", 0.45);
@@ -736,6 +756,7 @@ export default function ExperienceVoyage3D({ progress }) {
       ro.disconnect();
       renderer.dispose();
       mapTexture.dispose();
+      map.geometry.dispose();
       mapMaterial.dispose();
       routeGroup.traverse((obj) => {
         if (obj.geometry) obj.geometry.dispose();

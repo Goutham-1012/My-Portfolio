@@ -621,6 +621,17 @@ html[data-theme="storm"] .parchment-scope .text-gradient {
 }
 
 /* ---- Cinematic 3D voyage chart ---- */
+#experience {
+  background:
+    radial-gradient(ellipse 92% 56% at 50% 58%, rgba(255, 230, 156, 0.54), transparent 74%),
+    linear-gradient(180deg, rgba(250, 238, 199, 0.78), rgba(246, 224, 164, 0.78) 52%, rgba(250, 238, 199, 0.72));
+}
+html[data-theme="storm"] #experience {
+  background:
+    linear-gradient(rgba(16, 23, 46, 0.5), rgba(16, 23, 46, 0.5)),
+    radial-gradient(ellipse 92% 56% at 50% 58%, rgba(255, 223, 143, 0.48), transparent 74%),
+    linear-gradient(180deg, rgba(67, 64, 57, 0.8), rgba(120, 101, 63, 0.72) 52%, rgba(45, 49, 62, 0.8));
+}
 .voyage-cinematic {
   isolation: isolate;
   background: transparent;
@@ -634,9 +645,7 @@ html[data-theme="storm"] .parchment-scope .text-gradient {
   filter: saturate(1.05) contrast(1.08);
 }
 .voyage-cinematic-glass {
-  background:
-    radial-gradient(ellipse 64% 34% at 50% 74%, rgba(47, 32, 20, 0.16), transparent 72%),
-    radial-gradient(ellipse 58% 34% at 50% 30%, rgba(255, 244, 194, 0.14), transparent 68%);
+  background: transparent;
 }
 .voyage-port-button {
   --pin-color: #d43d2a;
@@ -728,9 +737,7 @@ html[data-theme="storm"] .voyage-cinematic {
   background: transparent;
 }
 html[data-theme="storm"] .voyage-cinematic-glass {
-  background:
-    radial-gradient(ellipse 64% 34% at 50% 74%, rgba(0, 0, 0, 0.24), transparent 72%),
-    radial-gradient(ellipse 58% 34% at 50% 30%, rgba(120, 146, 210, 0.12), transparent 68%);
+  background: transparent;
 }
 
 /* ---- Vintage sea-chart page background: aged vignette + plotting grid + water squiggles ---- */
