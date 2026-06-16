@@ -1,6 +1,8 @@
+import { motion, useReducedMotion } from "framer-motion";
 import SectionHeading from "./ui/SectionHeading.jsx";
 import Reveal from "./ui/Reveal.jsx";
 import CountUp from "./ui/CountUp.jsx";
+import TiltCard from "./ui/TiltCard.jsx";
 import { Coin } from "./ui/MapDecor.jsx";
 
 const METRICS = [
@@ -9,6 +11,7 @@ const METRICS = [
     suffix: "%",
     label: "Less manual intervention in energy grid optimization workflows",
     org: "NextEra",
+    color: "#1f7a42",
   },
   {
     value: 99.95,
@@ -16,101 +19,111 @@ const METRICS = [
     decimals: 2,
     label: "Uptime maintained across production AI services",
     org: "NextEra",
+    color: "#a8730d",
   },
   {
     value: 65,
     suffix: "%",
     label: "Faster analyst query resolution across 10M+ grid records",
     org: "NextEra RAG",
+    color: "#0c6e9e",
   },
   {
     value: 50,
     suffix: "TB+",
     label: "SCADA and sensor data processed daily for anomaly detection",
     org: "NextEra",
+    color: "#d43d2a",
   },
   {
     value: 60,
     suffix: "%",
     label: "Faster regulatory compliance processing with LLM copilots",
     org: "Fiserv",
+    color: "#0c6e9e",
   },
   {
     value: 100,
     suffix: "TB+",
     label: "Claims data engineered into fraud signals",
     org: "Textron",
+    color: "#a8730d",
   },
 ];
 
 export default function Impact() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section id="impact" aria-label="Impact" className="relative py-24 md:py-32">
-      <div className="section-shell">
-        <Reveal>
-          {/* Wanted-poster treasure board: real parchment, nailed to the page */}
-          <div className="scroll-paper parchment-scope relative rounded-[2rem] border-[3px] border-[#6a4a1e]/50 p-3 shadow-pop-lg">
-            <span aria-hidden="true" className="nail top-3 left-3 z-10 scale-150" />
-            <span aria-hidden="true" className="nail top-3 right-3 z-10 scale-150" />
-            <span aria-hidden="true" className="nail bottom-3 left-3 z-10 scale-150" />
-            <span aria-hidden="true" className="nail right-3 bottom-3 z-10 scale-150" />
-            <div className="relative overflow-hidden rounded-[1.6rem] border-2 border-dashed border-gold-500/60 px-8 py-14 sm:px-12 sm:py-16">
-              {/* spinning corner doubloons */}
-              <Coin className="absolute top-5 left-5" size={32} />
-              <Coin className="absolute top-5 right-5" size={32} delay={0.9} />
-              <Coin className="absolute bottom-5 left-5" size={32} delay={1.8} />
-              <Coin className="absolute right-5 bottom-5" size={32} delay={2.7} />
-              {/* skull watermark */}
-              <span
-                aria-hidden="true"
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[11rem] text-ink-900/5 select-none sm:text-[15rem]"
-              >
-                ☠
-              </span>
-              <div
-                aria-hidden="true"
-                className="absolute top-0 left-1/4 h-56 w-56 rounded-full bg-gold-300/30 blur-[90px]"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute right-1/4 bottom-0 h-56 w-56 rounded-full bg-ocean-300/30 blur-[90px]"
-              />
+    <section id="impact" aria-label="Impact" className="relative overflow-hidden py-24 md:py-32">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gold-300/12 to-transparent" />
+        <Coin className="absolute top-[18%] left-[9%] animate-float" size={34} />
+        <Coin className="absolute top-[24%] right-[12%] animate-float" size={26} delay={1.3} />
+        <Coin className="absolute bottom-[18%] left-[5%] animate-float" size={24} delay={2.4} />
+      </div>
 
-              <div className="relative">
-                <SectionHeading
-                  index="06"
-                  eyebrow="The Bounty"
-                  title="Not just plunder —"
-                  accent="measurable treasure."
-                  align="center"
-                />
+      <div className="section-shell relative">
+        <SectionHeading
+          index="06"
+          eyebrow="The Bounty"
+          title="Not just plunder -"
+          accent="measurable treasure."
+          align="center"
+        />
 
-                <div className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-                  {METRICS.map((m, i) => (
-                    <Reveal key={m.label} delay={0.08 * i}>
-                      <div className="group text-center">
-                        <p className="font-display text-6xl text-gradient transition-transform duration-500 group-hover:scale-110 sm:text-7xl">
-                          <CountUp
-                            value={m.value}
-                            suffix={m.suffix}
-                            decimals={m.decimals || 0}
-                            duration={2.2}
-                          />
-                        </p>
-                        <p className="mx-auto mt-3 max-w-[16rem] text-sm leading-snug text-ink-500">
-                          {m.label}
-                        </p>
-                        <p className="mt-2 font-hand text-lg font-bold text-ink-400">
-                          ~ {m.org} ~
-                        </p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </Reveal>
+        <div className="treasure-field mt-16">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 1100 520"
+            preserveAspectRatio="none"
+            className="treasure-route"
+          >
+            <path d="M10 390 C 190 170 330 480 500 260 S 820 120 1090 330" />
+            <path d="M50 120 C 260 280 450 30 640 150 S 920 340 1060 110" />
+          </svg>
+
+          {METRICS.map((m, i) => (
+            <Reveal key={m.label} delay={0.06 * i} className="h-full">
+              <TiltCard max={10} glareEnabled={false} className="h-full">
+                <motion.article
+                  className="treasure-metric h-full"
+                  style={{ "--metric-color": m.color }}
+                  animate={
+                    reduceMotion
+                      ? undefined
+                      : {
+                          y: [0, i % 2 === 0 ? -10 : -6, 0],
+                          rotateZ: [0, i % 2 === 0 ? 0.7 : -0.6, 0],
+                        }
+                  }
+                  transition={{
+                    duration: 6.5 + i * 0.4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.25,
+                  }}
+                >
+                  <span className="treasure-metric__pin" aria-hidden="true" />
+                  <p className="treasure-metric__number font-display">
+                    <CountUp
+                      value={m.value}
+                      suffix={m.suffix}
+                      decimals={m.decimals || 0}
+                      duration={2.2}
+                    />
+                  </p>
+                  <p className="mt-3 text-sm leading-snug text-ink-600">
+                    {m.label}
+                  </p>
+                  <p className="mt-3 font-hand text-lg font-bold text-ink-400">
+                    ~ {m.org} ~
+                  </p>
+                </motion.article>
+              </TiltCard>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

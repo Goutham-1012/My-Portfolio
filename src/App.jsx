@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MotionConfig } from "framer-motion";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -8,6 +9,7 @@ import Projects from "./components/Projects.jsx";
 import Education from "./components/Education.jsx";
 import Impact from "./components/Impact.jsx";
 import Contact from "./components/Contact.jsx";
+import AmbientVoyage from "./components/ui/AmbientVoyage.jsx";
 import { CompassRose, SeaSerpent, XMark } from "./components/ui/MapDecor.jsx";
 
 export default function App() {
@@ -44,11 +46,13 @@ export default function App() {
   }
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="relative min-h-screen">
       {/* Old-map ambience: chart grid, water squiggles, aged vignette */}
       <div aria-hidden="true" className="bg-chart pointer-events-none fixed inset-0 z-0" />
       <div aria-hidden="true" className="bg-dots pointer-events-none fixed inset-0 z-0" />
       <div aria-hidden="true" className="bg-noise pointer-events-none fixed inset-0 z-0" />
+      <AmbientVoyage />
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <CompassRose className="absolute -top-16 -right-28 w-[26rem] animate-spin-slow text-ink-900/6" />
         <SeaSerpent className="absolute top-[30%] left-[2%] w-28 text-ocean-600/10" />
@@ -79,5 +83,6 @@ export default function App() {
         <Contact />
       </main>
     </div>
+    </MotionConfig>
   );
 }

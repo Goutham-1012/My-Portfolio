@@ -8,13 +8,13 @@ const wordContainer = {
 };
 
 const word = {
-  hidden: { y: "115%" },
+  hidden: { y: "18%" },
   show: { y: "0%", transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 };
 
 /**
  * Section header styled as a storybook chapter: handwritten eyebrow,
- * word-by-word masked title reveal. `accent` words get the treasure gradient.
+ * word-by-word title reveal. Accent words stay solid to preserve readability.
  */
 export default function SectionHeading({
   index,
@@ -55,7 +55,7 @@ export default function SectionHeading({
             <span key={i} className="inline-flex overflow-hidden pb-1">
               <motion.span
                 variants={word}
-                className={`inline-block ${w.accent ? "text-gradient" : ""}`}
+                className={`inline-block ${w.accent ? "section-accent-text" : ""}`}
               >
                 {w.t}
               </motion.span>

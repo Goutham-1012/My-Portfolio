@@ -55,7 +55,7 @@ export default function Navbar() {
             href="#top"
             className="group flex items-center gap-2 font-display text-2xl text-ink-900"
           >
-            <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-tar bg-gold-400 text-tar shadow-pop-solid-sm transition-transform duration-300 group-hover:rotate-12">
+            <span className="grid h-10 w-10 place-items-center rounded-full border-2 border-tar bg-gold-400 text-tar shadow-pop-solid-sm transition-transform duration-300 group-hover:rotate-12">
               <Anchor size={17} strokeWidth={2.5} />
             </span>
             GR<span className="text-gradient">.</span>
@@ -85,7 +85,7 @@ export default function Navbar() {
             type="button"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
-            className="grid h-10 w-10 place-items-center rounded-full text-ink-700 transition-colors hover:bg-ink-900/5 md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full text-ink-700 transition-colors hover:bg-ink-900/5 md:hidden"
           >
             <Menu size={20} />
           </button>
@@ -110,7 +110,7 @@ export default function Navbar() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
-                className="grid h-10 w-10 place-items-center rounded-full text-ink-700 hover:bg-ink-900/5"
+                className="grid h-11 w-11 place-items-center rounded-full text-ink-700 hover:bg-ink-900/5"
               >
                 <X size={22} />
               </button>

@@ -1,4 +1,7 @@
 import {
+  motion,
+} from "framer-motion";
+import {
   FileText,
   Boxes,
   Bot,
@@ -120,9 +123,9 @@ export default function Projects() {
                         Case study on request <ArrowRight size={15} />
                       </a>
                       <a
-                        href="#"
-                        aria-label="View source on GitHub (link placeholder)"
-                        className="grid h-10 w-10 place-items-center rounded-lg border-2 border-ink-900/20 text-ink-500 transition-all hover:border-crimson-500 hover:text-crimson-500"
+                        href="#contact"
+                        aria-label="Request the RAG advisor source details"
+                        className="grid h-11 w-11 place-items-center rounded-lg border-2 border-ink-900/20 text-ink-500 transition-all hover:border-crimson-500 hover:text-crimson-500"
                       >
                         <Github size={17} />
                       </a>
@@ -130,43 +133,35 @@ export default function Projects() {
                   </div>
 
                   {/* Treasure route */}
-                  <div
-                    className="rounded-2xl border-2 border-[#8a6a30]/40 bg-[#fff8e6]/80 p-6"
-                    aria-label="RAG pipeline architecture"
-                  >
-                    <p className="mb-5 font-hand text-2xl font-bold text-crimson-500">
+                  <div className="pipeline-chart" aria-label="RAG pipeline architecture">
+                    <p className="relative z-10 mb-6 font-hand text-2xl font-bold text-crimson-500">
                       The Route to the Loot
                     </p>
-                    <ol className="space-y-1">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 420 420"
+                      preserveAspectRatio="none"
+                      className="pipeline-chart__route"
+                    >
+                      <path d="M64 46 C 250 40 125 160 310 160 S 188 286 350 350" />
+                    </svg>
+                    <ol className="pipeline-chart__nodes">
                       {FLOW.map((node, i) => (
-                        <li key={node.label}>
-                          <div className="flex items-center gap-4">
-                            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border-2 border-ink-900/15 bg-ocean-400/15 text-ocean-600">
-                              <node.icon size={17} />
-                            </span>
-                            <span className="text-sm font-bold text-ink-700">
-                              {node.label}
-                            </span>
-                          </div>
-                          {i < FLOW.length - 1 && (
-                            <svg
-                              aria-hidden="true"
-                              className="ml-5 h-6 w-px overflow-visible"
-                              viewBox="0 0 2 24"
-                            >
-                              <line
-                                x1="1"
-                                y1="0"
-                                x2="1"
-                                y2="24"
-                                stroke="rgba(212,61,42,0.7)"
-                                strokeWidth="2.5"
-                                strokeDasharray="4 5"
-                                className="animate-flow-dash"
-                              />
-                            </svg>
-                          )}
-                        </li>
+                        <motion.li
+                          key={node.label}
+                          initial={{ opacity: 1, y: 18, rotateX: 12 }}
+                          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                          viewport={{ once: false, amount: 0.45 }}
+                          transition={{ delay: 0.08 * i, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                          className="pipeline-node"
+                        >
+                          <span className="pipeline-node__icon">
+                            <node.icon size={17} />
+                          </span>
+                          <span className="pipeline-node__label">
+                            {node.label}
+                          </span>
+                        </motion.li>
                       ))}
                     </ol>
                   </div>
@@ -214,16 +209,16 @@ export default function Projects() {
                     </ul>
                     <div className="mt-6 flex items-center gap-3">
                       <a
-                        href="#"
-                        aria-label={`${p.title} on GitHub (link placeholder)`}
-                        className="grid h-9 w-9 place-items-center rounded-lg border-2 border-ink-900/20 text-ink-500 transition-all hover:border-crimson-500 hover:text-crimson-500"
+                        href="#contact"
+                        aria-label={`Request ${p.title} source details`}
+                        className="grid h-11 w-11 place-items-center rounded-lg border-2 border-ink-900/20 text-ink-500 transition-all hover:border-crimson-500 hover:text-crimson-500"
                       >
                         <Github size={16} />
                       </a>
                       <a
-                        href="#"
-                        aria-label={`${p.title} live demo (link placeholder)`}
-                        className="grid h-9 w-9 place-items-center rounded-lg border-2 border-ink-900/20 text-ink-500 transition-all hover:border-crimson-500 hover:text-crimson-500"
+                        href="#contact"
+                        aria-label={`Request ${p.title} demo details`}
+                        className="grid h-11 w-11 place-items-center rounded-lg border-2 border-ink-900/20 text-ink-500 transition-all hover:border-crimson-500 hover:text-crimson-500"
                       >
                         <ExternalLink size={16} />
                       </a>

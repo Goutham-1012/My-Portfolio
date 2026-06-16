@@ -400,6 +400,21 @@ function createShip() {
     });
   });
 
+  [-0.72, -0.36, 0.02, 0.42, 0.82].forEach((x) => {
+    [-0.42, 0.42].forEach((z) => {
+      const cannon = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.024, 0.22, 12), darkWood);
+      cannon.rotation.x = Math.PI / 2;
+      cannon.position.set(x, 0.08, z);
+      cannon.castShadow = true;
+      group.add(cannon);
+    });
+  });
+
+  const keel = new THREE.Mesh(new THREE.BoxGeometry(2.25, 0.055, 0.08), darkWood);
+  keel.position.set(0.02, -0.22, 0);
+  keel.castShadow = true;
+  group.add(keel);
+
   const bowsprit = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.028, 0.82, 14), darkWood);
   bowsprit.rotation.z = Math.PI / 2 + 0.18;
   bowsprit.position.set(1.46, 0.36, 0);
@@ -580,6 +595,13 @@ export default function ExperienceVoyage3D({ progress }) {
     renderer.toneMappingExposure = 1.08;
     mount.appendChild(renderer.domElement);
 
+    const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let reducedMotion = reduceQuery.matches;
+    const updateReducedMotion = (event) => {
+      reducedMotion = event.matches;
+    };
+    reduceQuery.addEventListener?.("change", updateReducedMotion);
+
     const ambient = new THREE.HemisphereLight(0xfff2cc, 0x3c2415, 1.85);
     scene.add(ambient);
 
@@ -643,8 +665,8 @@ export default function ExperienceVoyage3D({ progress }) {
 
     const frameCamera = (width) => {
       if (width < 640) {
-        camera.fov = 50;
-        camera.position.set(0, 12.1, 18.0);
+        camera.fov = 54;
+        camera.position.set(0, 13.1, 20.2);
       } else if (width < 1024) {
         camera.fov = 42;
         camera.position.set(0, 10.6, 14.8);
@@ -677,16 +699,21 @@ export default function ExperienceVoyage3D({ progress }) {
       const point = curve.getPoint(Math.min(0.995, Math.max(0.005, current)));
       const tangent = curve.getTangent(Math.min(0.995, Math.max(0.005, current))).normalize();
       const yaw = Math.atan2(-tangent.z, tangent.x);
+      const bob = reducedMotion ? 0 : Math.sin(t * 1.4) * 0.035;
+      const roll = reducedMotion ? 0 : Math.sin(t * 1.7) * 0.028;
+      const pitch = reducedMotion ? 0 : Math.sin(t * 1.2) * 0.018;
 
-      ship.position.set(point.x, 0.29 + Math.sin(t * 1.4) * 0.035, point.z);
-      ship.rotation.set(Math.sin(t * 1.2) * 0.018, yaw, Math.sin(t * 1.7) * 0.028);
+      ship.position.set(point.x, 0.29 + bob, point.z);
+      ship.rotation.set(pitch, yaw, roll);
 
       shadow.position.set(point.x + 0.28, 0.09, point.z + 0.28);
-      shadow.material.opacity = 0.18 + Math.sin(t * 1.4) * 0.025;
+      shadow.material.opacity = reducedMotion ? 0.18 : 0.18 + Math.sin(t * 1.4) * 0.025;
 
-      sails.forEach((sail, i) => {
-        sail.rotation.y = Math.sin(t * 1.1 + i * 0.7) * 0.035;
-      });
+      if (!reducedMotion) {
+        sails.forEach((sail, i) => {
+          sail.rotation.y = Math.sin(t * 1.1 + i * 0.7) * 0.035;
+        });
+      }
 
       dashes.forEach(({ mesh, t: dashT, active, inactive }) => {
         if (dashT <= current + 0.02) {
@@ -705,6 +732,7 @@ export default function ExperienceVoyage3D({ progress }) {
 
     return () => {
       window.cancelAnimationFrame(frameId);
+      reduceQuery.removeEventListener?.("change", updateReducedMotion);
       ro.disconnect();
       renderer.dispose();
       mapTexture.dispose();

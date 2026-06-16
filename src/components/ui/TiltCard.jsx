@@ -5,6 +5,7 @@ import {
   useSpring,
   useTransform,
   useMotionTemplate,
+  useReducedMotion,
 } from "framer-motion";
 
 /**
@@ -13,6 +14,7 @@ import {
  */
 export default function TiltCard({ children, className = "", max = 8, glareEnabled = true }) {
   const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
   const px = useMotionValue(0.5);
   const py = useMotionValue(0.5);
 
@@ -30,6 +32,7 @@ export default function TiltCard({ children, className = "", max = 8, glareEnabl
   const glare = useMotionTemplate`radial-gradient(480px circle at ${glareX}% ${glareY}%, rgba(255,205,95,0.22), transparent 65%)`;
 
   function onMove(e) {
+    if (!ref.current || reduceMotion) return;
     const r = ref.current.getBoundingClientRect();
     px.set((e.clientX - r.left) / r.width);
     py.set((e.clientY - r.top) / r.height);
@@ -45,17 +48,17 @@ export default function TiltCard({ children, className = "", max = 8, glareEnabl
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      whileHover={{ scale: 1.02 }}
+      whileHover={reduceMotion ? undefined : { scale: 1.02 }}
       style={{
-        rotateX,
-        rotateY,
+        rotateX: reduceMotion ? 0 : rotateX,
+        rotateY: reduceMotion ? 0 : rotateY,
         transformStyle: "preserve-3d",
         transformPerspective: 900,
       }}
       className={`relative ${className}`}
     >
       {children}
-      {glareEnabled && (
+      {glareEnabled && !reduceMotion && (
         <motion.div
           aria-hidden="true"
           style={{ background: glare }}

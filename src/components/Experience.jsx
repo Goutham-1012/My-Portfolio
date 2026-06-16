@@ -114,8 +114,8 @@ const PORTS = [
 ];
 
 const PORTS_MOBILE = [
-  { x: 0.34, y: 0.26 },
-  { x: 0.7, y: 0.28 },
+  { x: 0.26, y: 0.26 },
+  { x: 0.74, y: 0.28 },
   { x: 0.3, y: 0.48 },
   { x: 0.7, y: 0.68 },
   { x: 0.32, y: 0.82 },
@@ -317,7 +317,7 @@ export default function Experience() {
                       type="button"
                       onClick={() => setOpenJob(null)}
                       aria-label="Close log"
-                      className="absolute top-3 right-3 z-20 grid h-9 w-9 place-items-center rounded-full border-2 border-[#2f2014]/30 text-[#2f2014] transition-colors hover:bg-[#2f2014]/10"
+                      className="absolute top-3 right-3 z-20 grid h-11 w-11 place-items-center rounded-full border-2 border-[#2f2014]/30 text-[#2f2014] transition-colors hover:bg-[#2f2014]/10"
                     >
                       <X size={18} />
                     </button>
