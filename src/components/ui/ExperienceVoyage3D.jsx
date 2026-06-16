@@ -115,19 +115,19 @@ function makeMapTexture() {
     ctx.closePath();
     ctx.fillStyle = color;
     ctx.strokeStyle = "rgba(89,62,31,0.54)";
-    ctx.lineWidth = 8;
+    ctx.lineWidth = 5;
     ctx.fill();
     ctx.stroke();
     ctx.globalAlpha = 0.45;
     ctx.strokeStyle = "rgba(78,109,63,0.55)";
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 1.8;
     for (let i = 0; i < 8; i += 1) {
       ctx.beginPath();
       ctx.ellipse(0, 0, rx * (0.28 + i * 0.08), ry * (0.2 + i * 0.055), -0.25, 0, Math.PI * 2);
       ctx.stroke();
     }
     ctx.globalAlpha = 1;
-    ctx.font = `${Math.max(38, Math.round(rx * 0.2))}px Georgia, serif`;
+    ctx.font = `${Math.max(26, Math.round(rx * 0.19))}px Georgia, serif`;
     ctx.fillStyle = "rgba(72,45,25,0.5)";
     ctx.textAlign = "center";
     ctx.rotate(-0.08);
@@ -135,11 +135,11 @@ function makeMapTexture() {
     ctx.restore();
   }
 
-  coast({ x: 0.2, y: 0.18 }, 250, 188, "#b7c56a", "Energy Coast");
-  coast({ x: 0.84, y: 0.23 }, 244, 184, "#d6ba62", "Finance Bank");
-  coast({ x: 0.18, y: 0.5 }, 254, 192, "#d1ae67", "Aviation Shoal");
-  coast({ x: 0.82, y: 0.72 }, 254, 192, "#bfc46f", "Retail Sound");
-  coast({ x: 0.24, y: 0.9 }, 238, 178, "#b9a55e", "Clinical Coast");
+  coast({ x: 0.2, y: 0.18 }, 150, 116, "#b7c56a", "Energy Coast");
+  coast({ x: 0.84, y: 0.23 }, 146, 112, "#d6ba62", "Finance Bank");
+  coast({ x: 0.18, y: 0.5 }, 154, 118, "#d1ae67", "Aviation Shoal");
+  coast({ x: 0.82, y: 0.72 }, 154, 118, "#bfc46f", "Retail Sound");
+  coast({ x: 0.24, y: 0.9 }, 144, 110, "#b9a55e", "Clinical Coast");
 
   ctx.save();
   ctx.setLineDash([28, 22]);
